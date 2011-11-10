@@ -8,7 +8,7 @@ if [[ -z $STORE_CURRENT_FILE ]]; then
     STORE_CURRENT_FILE="$STORE_FILE-current"
 fi
 
-action_start () {
+action-start () {
     if [[ -f $STORE_CURRENT_FILE ]]; then
         echo 'A task is already active. Please stop it first.' >&2
         return 1
@@ -16,25 +16,25 @@ action_start () {
     project_name="$1"
     echo "$project_name [$(date)]" >> $STORE_CURRENT_FILE
     shift
-    action_note "$*"
+    action-note "$*"
 }
 
-action_stop () {
-    action_note "$*"
+action-stop () {
+    action-note "$*"
     echo >> $STORE_FILE
     head -1 $STORE_CURRENT_FILE | sed "s^$^ to [$(date)]^" >> $STORE_FILE
     cat $STORE_CURRENT_FILE | awk 'NR != 1' >> $STORE_FILE
     rm $STORE_CURRENT_FILE
 }
 
-action_note () {
+action-note () {
     desc="$*"
     if [[ ! -z $desc ]]; then
         echo "  $desc" >> $STORE_CURRENT_FILE
     fi
 }
 
-action_status () {
+action-status () {
     if [[ ! -f $STORE_CURRENT_FILE ]]; then
         echo "You have not started any project. Use $0 start <project-name> [description]"
         return 1
@@ -50,7 +50,7 @@ action_status () {
 }
 
 list-actions () {
-    compgen -A function action_ | sed 's/^action_//'
+    compgen -A function action- | sed 's/^action-//'
 }
 
 main () {
@@ -60,7 +60,7 @@ main () {
         echo "No action '$1' found" >&2
     elif [[ $match_count == 1 ]]; then 
         shift
-        "action_$matching_actions" "$@"
+        "action-$matching_actions" "$@"
         return $?
     else
         echo "Ambiguous action name:" >&2
