@@ -29,7 +29,9 @@ action-stop () {
 
 action-note () {
     desc="$*"
-    if [[ ! -z $desc ]]; then
+    if [[ -z $desc ]]; then
+        "$EDITOR" "$STORE_CURRENT_FILE"
+    else
         echo "  $desc" >> $STORE_CURRENT_FILE
     fi
 }
