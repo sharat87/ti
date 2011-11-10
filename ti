@@ -22,8 +22,10 @@ action-start () {
 action-stop () {
     _NON_INTERACTIVE=1 action-note "$*"
     echo >> $STORE_FILE
+    project="$(head -1 $STORE_CURRENT_FILE | sed 's/ \[.\+$//')"
     head -1 $STORE_CURRENT_FILE | sed "s^$^ to [$(date)]^" >> $STORE_FILE
     cat $STORE_CURRENT_FILE | awk 'NR != 1' >> $STORE_FILE
+    echo "So you stopped working on $project."
     rm $STORE_CURRENT_FILE
 }
 
