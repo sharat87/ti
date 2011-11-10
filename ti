@@ -17,7 +17,9 @@ action_start () {
     shift
     desc="$*"
     echo "$project_name [$(date)]" >> $STORE_CURRENT_FILE
-    echo "  $desc" >> $STORE_CURRENT_FILE
+    if [[ ! -z $desc ]]; then
+        echo "  $desc" >> $STORE_CURRENT_FILE
+    fi
 }
 
 action_stop () {
