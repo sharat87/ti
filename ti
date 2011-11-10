@@ -28,6 +28,10 @@ action-stop () {
 }
 
 action-note () {
+    if ! is-working?; then
+        echo "For all I know, you aren't working on anything. Where should I be noting this?" >&2
+        return 1
+    fi
     desc="$*"
     if [[ -z $desc ]]; then
         "$EDITOR" "$STORE_CURRENT_FILE"
@@ -49,6 +53,11 @@ action-status () {
     else
         echo "You are working on '$project' since $from_time"
     fi
+}
+
+is-working? () {
+    [[ -f $STORE_CURRENT_FILE ]]
+    return $?
 }
 
 list-actions () {
