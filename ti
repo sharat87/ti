@@ -74,7 +74,7 @@ main () {
     match_count="$(echo "$matching_actions" | wc -l)"
     if [[ $match_count == 0 ]]; then
         echo "No action '$1' found" >&2
-    elif [[ $match_count == 1 ]]; then 
+    elif [[ $match_count == 1 ]]; then
         shift
         "action-$matching_actions" "$@"
         return $?
