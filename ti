@@ -1,7 +1,12 @@
 #!/bin/bash
 
-STORE_FILE=~/.ti
-STORE_CURRENT_FILE=~/.ti-current
+if [[ -z $STORE_FILE ]]; then
+    STORE_FILE=~/.ti
+fi
+
+if [[ -z $STORE_CURRENT_FILE ]]; then
+    STORE_CURRENT_FILE="$STORE_FILE-current"
+fi
 
 action_start () {
     if [[ -f $STORE_CURRENT_FILE ]]; then
