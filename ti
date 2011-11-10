@@ -42,7 +42,7 @@ action_status () {
     pline="$(head -1 $STORE_CURRENT_FILE)"
     project="$(echo $pline | sed 's/ \[.\+$//')"
     from_time="$(echo $pline | sed 's/^.\+\[//' | sed 's/\]$//')"
-    echo "You are working on '$project' since $from_time"
+    echo "You have been working on '$project' for $(dtime "$from_time")"
 }
 
 main () {
