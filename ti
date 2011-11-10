@@ -1,0 +1,47 @@
+#!/bin/bash
+
+STORE_FILE=~/.ti
+STORE_CURRENT_FILE=~/.ti-current
+
+action_start () {
+    if [[ -f $STORE_CURRENT_FILE ]]; then
+        echo 'A task is already active. Please stop it first.' >&2
+        return 1
+    fi
+    project_name="$1"
+    shift
+    desc="$*"
+    echo "$project_name [$(date)]" >> $STORE_CURRENT_FILE
+    echo "  $desc" >> $STORE_CURRENT_FILE
+}
+
+action_stop () {
+    action_note "$*"
+    head -1 $STORE_CURRENT_FILE | sed "s^$^ to [$(date)]^" >> $STORE_FILE
+    cat $STORE_CURRENT_FILE | awk 'NR != 1' >> $STORE_FILE
+    rm $STORE_CURRENT_FILE
+}
+
+action_note () {
+    echo "  $*" >> $STORE_CURRENT_FILE
+}
+
+action_status () {
+    if [[ ! -f $STORE_CURRENT_FILE ]]; then
+        echo "You have not started any project. Use $0 start <project-name> [description]"
+        return 1
+    fi
+    pline="$(head -1 $STORE_CURRENT_FILE)"
+    project="$(echo $pline | sed 's/ \[.\+$//')"
+    from_time="$(echo $pline | sed 's/^.\+\[//' | sed 's/\]$//')"
+    echo "You are working on '$project' since $from_time"
+}
+
+main () {
+    action_name="$1"
+    shift
+    "action_$action_name" "$@"
+    return $?
+}
+
+main "$@"
