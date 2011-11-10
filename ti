@@ -16,11 +16,11 @@ action-start () {
     project_name="$1"
     echo "$project_name [$(date)]" >> $STORE_CURRENT_FILE
     shift
-    action-note "$*"
+    _NON_INTERACTIVE=1 action-note "$*"
 }
 
 action-stop () {
-    action-note "$*"
+    _NON_INTERACTIVE=1 action-note "$*"
     echo >> $STORE_FILE
     head -1 $STORE_CURRENT_FILE | sed "s^$^ to [$(date)]^" >> $STORE_FILE
     cat $STORE_CURRENT_FILE | awk 'NR != 1' >> $STORE_FILE
@@ -33,9 +33,9 @@ action-note () {
         return 1
     fi
     desc="$*"
-    if [[ -z $desc ]]; then
+    if [[ -z $desc && -z $_NON_INTERACTIVE ]]; then
         "$EDITOR" "$STORE_CURRENT_FILE"
-    else
+    elif [[ ! -z $desc ]]; then
         echo "  $desc" >> $STORE_CURRENT_FILE
     fi
 }
