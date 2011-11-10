@@ -20,6 +20,7 @@ action-start () {
 }
 
 action-stop () {
+    ensure-working!
     _NON_INTERACTIVE=1 action-note "$*"
     echo >> $STORE_FILE
     project="$(head -1 $STORE_CURRENT_FILE | sed 's/ \[.\+$//')"
@@ -30,10 +31,7 @@ action-stop () {
 }
 
 action-note () {
-    if ! is-working?; then
-        echo "For all I know, you aren't working on anything. Where should I be noting this?" >&2
-        return 1
-    fi
+    ensure-working!
     desc="$*"
     if [[ -z $desc && -z $_NON_INTERACTIVE ]]; then
         "$EDITOR" "$STORE_CURRENT_FILE"
@@ -43,10 +41,7 @@ action-note () {
 }
 
 action-status () {
-    if [[ ! -f $STORE_CURRENT_FILE ]]; then
-        echo "You have not started any project. Use $0 start <project-name> [description]"
-        return 1
-    fi
+    ensure-working!
     pline="$(head -1 $STORE_CURRENT_FILE)"
     project="$(echo $pline | sed 's/ \[.\+$//')"
     from_time="$(echo $pline | sed 's/^.\+\[//' | sed 's/\]$//')"
@@ -60,6 +55,14 @@ action-status () {
 is-working? () {
     [[ -f $STORE_CURRENT_FILE ]]
     return $?
+}
+
+ensure-working! () {
+    if ! is-working?; then
+        echo "For all I know, you aren't working on anything. I don't know what to do." >&2
+        echo "Use $0 start <project-name> [description]" >&2
+        exit 1
+    fi
 }
 
 list-actions () {
