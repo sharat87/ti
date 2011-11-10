@@ -49,11 +49,24 @@ action_status () {
     fi
 }
 
+list-actions () {
+    compgen -A function action_ | sed 's/^action_//'
+}
+
 main () {
-    action_name="$1"
-    shift
-    "action_$action_name" "$@"
-    return $?
+    matching_actions="$(list-actions | grep "^$1")"
+    match_count="$(echo "$matching_actions" | wc -l)"
+    if [[ $match_count == 0 ]]; then
+        echo "No action '$1' found" >&2
+    elif [[ $match_count == 1 ]]; then 
+        shift
+        "action_$matching_actions" "$@"
+        return $?
+    else
+        echo "Ambiguous action name:" >&2
+        echo "$matching_actions" | sed 's/^/  /' >&2
+    fi
+    return 1
 }
 
 main "$@"
