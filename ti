@@ -15,21 +15,13 @@ action-start () {
     fi
     project_name="$1"
     shift
-    when="$*"
-    if [[ -z $when ]]; then
-        when=now
-    fi
-    start_time="$(date --date="$when")"
+    start_time="$(read-time "$@")"
     echo "$project_name [$start_time]" >> $STORE_CURRENT_FILE
 }
 
 action-stop () {
     ensure-working!
-    when="$*"
-    if [[ -z $when ]]; then
-        when=now
-    fi
-    stop_time="$(date --date="$when")"
+    stop_time="$(read-time "$@")"
     echo >> $STORE_FILE
     project="$(head -1 $STORE_CURRENT_FILE | sed 's/ \[.\+$//')"
     head -1 $STORE_CURRENT_FILE | sed "s^$^ to [$stop_time]^" >> $STORE_FILE
@@ -58,6 +50,14 @@ action-status () {
     else
         echo "You are working on '$project' since $from_time"
     fi
+}
+
+read-time () {
+    when="$@"
+    if [[ -z $when ]]; then
+        when=now
+    fi
+    date --date="$when"
 }
 
 is-working? () {
