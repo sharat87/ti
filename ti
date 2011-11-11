@@ -52,6 +52,10 @@ action-status () {
     fi
 }
 
+action-edit () {
+    "$EDITOR" "$STORE_FILE"
+}
+
 read-time () {
     when="$@"
     if [[ -z $when ]]; then
