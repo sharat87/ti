@@ -21,10 +21,14 @@ action-start () {
 
 action-stop () {
     ensure-working!
-    _NON_INTERACTIVE=1 action-note "$*"
+    when="$*"
+    if [[ -z $when ]]; then
+        when=now
+    fi
+    stop_time="$(date --date="$when")"
     echo >> $STORE_FILE
     project="$(head -1 $STORE_CURRENT_FILE | sed 's/ \[.\+$//')"
-    head -1 $STORE_CURRENT_FILE | sed "s^$^ to [$(date)]^" >> $STORE_FILE
+    head -1 $STORE_CURRENT_FILE | sed "s^$^ to [$stop_time]^" >> $STORE_FILE
     cat $STORE_CURRENT_FILE | awk 'NR != 1' >> $STORE_FILE
     echo "So you stopped working on $project."
     rm $STORE_CURRENT_FILE
