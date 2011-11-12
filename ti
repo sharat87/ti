@@ -10,7 +10,7 @@ fi
 
 action-on () {
     if [[ -f $SHEET_CURRENT_FILE ]]; then
-        echo 'A task is already active. Please off it first.' >&2
+        echo 'You are already working on my-project. Stop it or use a different sheet.' >&2
         return 1
     fi
     project_name="$1"
@@ -21,6 +21,7 @@ action-on () {
     shift
     start_time="$(read-time "$@")"
     echo "$project_name [$start_time]" >> $SHEET_CURRENT_FILE
+    echo "Start working on $project_name."
 }
 
 action-off () {
@@ -50,9 +51,9 @@ action-status () {
     project="$(echo $pline | sed 's/ \[.\+$//')"
     from_time="$(echo $pline | sed 's/^.\+\[//' | sed 's/\]$//')"
     if hash dtime 2>&-; then
-        echo "You have been working on '$project' for $(dtime "$from_time")."
+        echo "You have been working on $project for $(dtime "$from_time")."
     else
-        echo "You are working on '$project' since $from_time."
+        echo "You are working on $project since $from_time."
     fi
 }
 
