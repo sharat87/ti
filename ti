@@ -1,16 +1,16 @@
 #!/bin/bash
 
-if [[ -z $STORE_FILE ]]; then
-    STORE_FILE=~/.ti
+if [[ -z $SHEET_FILE ]]; then
+    SHEET_FILE=~/.ti
 fi
 
-if [[ -z $STORE_CURRENT_FILE ]]; then
-    STORE_CURRENT_FILE="$STORE_FILE-current"
+if [[ -z $SHEET_CURRENT_FILE ]]; then
+    SHEET_CURRENT_FILE="$SHEET_FILE-current"
 fi
 
-action-start () {
-    if [[ -f $STORE_CURRENT_FILE ]]; then
-        echo 'A task is already active. Please stop it first.' >&2
+action-on () {
+    if [[ -f $SHEET_CURRENT_FILE ]]; then
+        echo 'A task is already active. Please off it first.' >&2
         return 1
     fi
     project_name="$1"
@@ -20,33 +20,33 @@ action-start () {
     fi
     shift
     start_time="$(read-time "$@")"
-    echo "$project_name [$start_time]" >> $STORE_CURRENT_FILE
+    echo "$project_name [$start_time]" >> $SHEET_CURRENT_FILE
 }
 
-action-stop () {
+action-off () {
     ensure-working!
     stop_time="$(read-time "$@")"
-    echo >> $STORE_FILE
-    project="$(head -1 $STORE_CURRENT_FILE | sed 's/ \[.\+$//')"
-    head -1 $STORE_CURRENT_FILE | sed "s^$^ to [$stop_time]^" >> $STORE_FILE
-    cat $STORE_CURRENT_FILE | awk 'NR != 1' >> $STORE_FILE
+    echo >> $SHEET_FILE
+    project="$(head -1 $SHEET_CURRENT_FILE | sed 's/ \[.\+$//')"
+    head -1 $SHEET_CURRENT_FILE | sed "s^$^ to [$stop_time]^" >> $SHEET_FILE
+    cat $SHEET_CURRENT_FILE | awk 'NR != 1' >> $SHEET_FILE
     echo "So you stopped working on $project."
-    rm $STORE_CURRENT_FILE
+    rm $SHEET_CURRENT_FILE
 }
 
 action-note () {
     ensure-working!
     desc="$*"
     if [[ -z $desc && -z $_NON_INTERACTIVE ]]; then
-        "$EDITOR" "$STORE_CURRENT_FILE"
+        "$EDITOR" "$SHEET_CURRENT_FILE"
     elif [[ ! -z $desc ]]; then
-        echo "  $desc" >> $STORE_CURRENT_FILE
+        echo "  $desc" >> $SHEET_CURRENT_FILE
     fi
 }
 
 action-status () {
     ensure-working!
-    pline="$(head -1 $STORE_CURRENT_FILE)"
+    pline="$(head -1 $SHEET_CURRENT_FILE)"
     project="$(echo $pline | sed 's/ \[.\+$//')"
     from_time="$(echo $pline | sed 's/^.\+\[//' | sed 's/\]$//')"
     if hash dtime 2>&-; then
@@ -57,7 +57,7 @@ action-status () {
 }
 
 action-edit () {
-    "$EDITOR" "$STORE_FILE"
+    "$EDITOR" "$SHEET_FILE"
 }
 
 read-time () {
@@ -69,14 +69,14 @@ read-time () {
 }
 
 is-working? () {
-    [[ -f $STORE_CURRENT_FILE ]]
+    [[ -f $SHEET_CURRENT_FILE ]]
     return $?
 }
 
 ensure-working! () {
     if ! is-working?; then
         echo "For all I know, you aren't working on anything. I don't know what to do." >&2
-        echo "Use $0 start <project-name> [description]" >&2
+        echo "Use $0 on <project-name> [description]" >&2
         exit 1
     fi
 }
