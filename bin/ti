@@ -24,7 +24,7 @@ action-on () {
     echo "Start working on $project_name."
 }
 
-action-off () {
+action-fin () {
     ensure-working!
     stop_time="$(read-time "$@")"
     echo >> $SHEET_FILE
