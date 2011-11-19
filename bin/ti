@@ -14,9 +14,9 @@ fi
 
 main () {
     load-plugins
-    matching_actions="$(list-actions | grep "^$1")"
+    matching_actions="$(expand-action-name "$1")"
     match_count="$(echo "$matching_actions" | wc -l)"
-    if [[ $match_count == 0 ]]; then
+    if [[ -z $matching_actions ]]; then
         echo "No action '$1' found" >&2
     elif [[ $match_count == 1 ]]; then
         shift
@@ -65,6 +65,10 @@ load-plugins () {
             source "$fname"
         fi
     done
+}
+
+expand-action-name () {
+    list-actions | grep "^$1"
 }
 
 #-------------------------------------------------------------------------------
