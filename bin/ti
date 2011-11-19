@@ -14,6 +14,15 @@ fi
 
 main () {
     load-plugins
+    action "$@"
+    return $?
+}
+
+#-------------------------------------------------------------------------------
+# Core library functions
+#-------------------------------------------------------------------------------
+
+action () {
     matching_actions="$(expand-action-name "$1")"
     match_count="$(echo "$matching_actions" | wc -l)"
     if [[ -z $matching_actions ]]; then
@@ -28,10 +37,6 @@ main () {
     fi
     return 1
 }
-
-#-------------------------------------------------------------------------------
-# Core library functions
-#-------------------------------------------------------------------------------
 
 read-time () {
     when="$@"
