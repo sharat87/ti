@@ -26,7 +26,7 @@ Add another longer note
     holla hoy with a longer musical? note
 
 Note with external editor
+FIXME: Need a better EDITOR to test with
 
-  $ EDITOR="echo launched editor" ti note
-  /home/sharat/calypso/labs/ti/test/../bin/ti: line 42: echo launched editor: command not found
-  [127]
+  $ EDITOR="false" ti note
+  [1]
