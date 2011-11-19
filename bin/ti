@@ -1,14 +1,19 @@
 #!/bin/bash
 
 if [[ -z $SHEET_FILE ]]; then
-    SHEET_FILE=~/.ti
+    SHEET_FILE=~/.ti-sheet
 fi
 
 if [[ -z $SHEET_CURRENT_FILE ]]; then
     SHEET_CURRENT_FILE="$SHEET_FILE-current"
 fi
 
+if [[ -z $TI_CONF_DIR ]]; then
+    TI_CONF_DIR=~/.ti
+fi
+
 main () {
+    load-plugins
     matching_actions="$(list-actions | grep "^$1")"
     match_count="$(echo "$matching_actions" | wc -l)"
     if [[ $match_count == 0 ]]; then
@@ -51,6 +56,15 @@ ensure-working! () {
 
 list-actions () {
     compgen -A function action- | sed 's/^action-//'
+}
+
+load-plugins () {
+    [[ -d "$TI_CONF_DIR" ]] || return
+    for fname in "$TI_CONF_DIR"/*; do
+        if [[ $fname = *.ti || $fname = *.ti.sh ]]; then
+            source "$fname"
+        fi
+    done
 }
 
 #-------------------------------------------------------------------------------
