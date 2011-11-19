@@ -1,6 +1,6 @@
 Setup
 
-  $ export SHEET_FILE=$TMP/sheet
+  $ export SHEET_FILE=$TMP/sheet-status
   $ alias ti="$TESTDIR/../bin/ti"
 
 Status when not working
