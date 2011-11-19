@@ -1,0 +1,60 @@
+@import url(http://fonts.googleapis.com/css?family=Salsa|Open+Sans|Inconsolata);
+
+body {
+    background-color: #F2FCFF;
+    width: 960px;
+    margin: 0 auto;
+    font-size: 18px;
+    text-shadow: 1px 2px 1px rgba(240, 240, 255, .8);
+    font-family: "Open Sans", sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: Salsa, serif;
+    text-shadow: 0 2px 5px rgba(0, 43, 53, .2);
+}
+
+h1 {
+    text-align: center;
+    text-shadow:
+        /* left wing */
+        -10px 0 4px rgba(0, 100, 100, .3),
+        -20px 0 4px rgba(0, 100, 100, .25),
+        -30px 0 4px rgba(0, 100, 100, .2),
+        -40px 0 4px rgba(0, 100, 100, .15),
+        -50px 0 4px rgba(0, 100, 100, .1),
+        -60px 0 4px rgba(0, 100, 100, .05),
+        /* right wing */
+        10px 0 4px rgba(0, 100, 100, .3),
+        20px 0 4px rgba(0, 100, 100, .25),
+        30px 0 4px rgba(0, 100, 100, .2),
+        40px 0 4px rgba(0, 100, 100, .15),
+        50px 0 4px rgba(0, 100, 100, .1),
+        60px 0 4px rgba(0, 100, 100, .05);
+}
+
+h2 {
+    margin: 20px 0 5px;
+}
+
+p {
+    line-height: 1.5em;
+}
+
+pre, code {
+    font-family: Inconsolata, monospace;
+}
+
+code.ti {
+    text-shadow: 0 0 4px rgba(0, 0, 0, .8);
+}
+
+pre.usage {
+    text-shadow: none;
+    font-size: 1.2em;
+    padding: 3px 12px 7px;
+    border-radius: 3px;
+    background-color: #002B36;
+    color: #93A1A1;
+    box-shadow: inset 0 3px 12px rgba(0, 0, 0, .6);
+}

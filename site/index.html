@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset=utf8>
+        <title>ti - A silly simple time tracker</title>
+
+        <link href=styles.css rel=stylesheet>
+
+    <body>
+
+        <h1>ti</h1>
+
+        <h2>wat?</h2>
+
+        <p> <code class=ti>ti</code> is a simple command line tim tracker. It is
+        completely written in bash and has (almost) complete test coverage. It
+        is inspired by timed, which I felt a bit too limiting in features. It
+        also takes inspirateion from the simplicity of t.</p>
+
+        <p> If a time tracker tool makes me think for more than 10 seconds, I
+        usually forget what I was concentrating on.  This is why I created
+        <code class=ti>ti</code>.  With <code class=ti>ti</code>, you'll be
+        only as fast as you can type, which you should be good with anyway.</p>
+
+        <p>The most important part about <code class=ti>ti</code> is that it
+        provides just a few commands to manage your time tracking and gets out
+        of your way.  Better yet, its tiny core is extendable so you can write
+        your own actions to make you even faster for stuff that <i>you</i>
+        frequently do. In that spirit, all data is saved in an easily readable
+        format by all humans, pythons, rubies and other pe<span
+        style=color:#AAA>a</span>rls.</p>
+
+        <h2>Usage</h2>
+
+        <p>Here's the minimal usage style:</p>
+
+        <pre class="usage hll">$ ti on my-project
+Start working on my-project.
+
+$ ti status
+You have been working on my-project for less than a minute.
+
+$ ti fin
+So you stopped working on my-project.</pre>
+
+        <p><code>on</code> and <code>fin</code> can take a time at which to
+        apply the action</p>
+
+        <pre class="usage hll">$ ti on another-project 2 hours ago
+Start working on another-project.
+
+$ ti st
+You have been working on another-project for about 2 hours.
+
+$ ti fin 30 minutes ago
+So you stopped working on another-project.</pre>
+
+        <p>Also illustrating in the previous example is any unambiguous prefix
+        (<code>st</code>) of available actions can be used instead of the whole
+        action name.</p>
+
+        <p>Put brief notes on what you've been doing.</p>
+
+        <pre class="usage hll">$ ti note waiting for Napoleon to take over the world
+$ ti n another simple note for demo purposes</pre>
+
+        <p>Do plugins. For those that <i>need</i> the extra sauce.</p>
+
+        <pre class="usage hll">$ cat &lt;&lt;EOF &gt; ~/.ti/greeter.ti.sh
+&gt; action-greet () {
+&gt;     echo Hello there awesome ti user!
+&gt; }
+&gt; EOF
+
+$ ti greet # or just `ti gr`
+Hello there awesome ti user!</pre>
+
+<p>That might not look like much, but with this simple exendability and
+using the API (docs coming soon, for now you'll have to check the source), you can create
+innovative actions. Stuff that analyse the time sheet and give a report, make a report of a week
+and mail that to yourself or your boss, simply echo the current project name so you can use it to
+show info in your terminal prompt, what not?</p>
+
+        <h2>Status</h2>
+
+        <p>The project is still in its infancy. I'd like for people to check it out and
+        play with it.  Suggest more awesomeness and/or contribute otherwise.
+
+        <h2>Gimme!</h2>
+
+        <p>You can get <code class=ti>ti</code> <a
+            href=https://bitbucket.org/sharat87/ti>from the source on
+            bitbucket</a>. Put the `ti`  bash script (located in the bin
+        directory) somewhere in your $PATH and make sure it has executable
+        permissions and you should be able to use it just fine.</p>
+
+        <p>For the fancy relative time messages shown in the above usage examples, you'll
+        need a <code>dtime</code> executable somewhere in your $PATH. I'll release this
+        soon, so stay tuned (It is a dirty port of similar functionality from the rails
+        project, I'll publish once I clean it up a bit.).</p>
+
+        <h2>Who?</h2>
+
+        <p>I am Shrikant Sharat (<a target=_blank
+            href=https://twitter.com/#!sharat87>@sharat87</a>).  To get in
+        touch, ping me on twitter or <a
+            href=mailto:shrikantsharat.k@gmail.com>email</a>.</p>
