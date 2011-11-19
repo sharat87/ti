@@ -8,6 +8,55 @@ if [[ -z $SHEET_CURRENT_FILE ]]; then
     SHEET_CURRENT_FILE="$SHEET_FILE-current"
 fi
 
+main () {
+    matching_actions="$(list-actions | grep "^$1")"
+    match_count="$(echo "$matching_actions" | wc -l)"
+    if [[ $match_count == 0 ]]; then
+        echo "No action '$1' found" >&2
+    elif [[ $match_count == 1 ]]; then
+        shift
+        "action-$matching_actions" "$@"
+        return $?
+    else
+        echo "Ambiguous action name:" >&2
+        echo "$matching_actions" | sed 's/^/  /' >&2
+    fi
+    return 1
+}
+
+#-------------------------------------------------------------------------------
+# Core library functions
+#-------------------------------------------------------------------------------
+
+read-time () {
+    when="$@"
+    if [[ -z $when ]]; then
+        when=now
+    fi
+    date --date="$when"
+}
+
+is-working? () {
+    [[ -f $SHEET_CURRENT_FILE ]]
+    return $?
+}
+
+ensure-working! () {
+    if ! is-working?; then
+        echo "For all I know, you aren't working on anything. I don't know what to do." >&2
+        echo "Use $0 on <project-name> [description]" >&2
+        exit 1
+    fi
+}
+
+list-actions () {
+    compgen -A function action- | sed 's/^action-//'
+}
+
+#-------------------------------------------------------------------------------
+# Core actions
+#-------------------------------------------------------------------------------
+
 action-on () {
     if [[ -f $SHEET_CURRENT_FILE ]]; then
         echo 'You are already working on my-project. Stop it or use a different sheet.' >&2
@@ -61,45 +110,12 @@ action-edit () {
     "$EDITOR" "$SHEET_FILE"
 }
 
-read-time () {
-    when="$@"
-    if [[ -z $when ]]; then
-        when=now
-    fi
-    date --date="$when"
-}
+#-------------------------------------------------------------------------------
+# Additional actions
+#-------------------------------------------------------------------------------
 
-is-working? () {
-    [[ -f $SHEET_CURRENT_FILE ]]
-    return $?
-}
-
-ensure-working! () {
-    if ! is-working?; then
-        echo "For all I know, you aren't working on anything. I don't know what to do." >&2
-        echo "Use $0 on <project-name> [description]" >&2
-        exit 1
-    fi
-}
-
-list-actions () {
-    compgen -A function action- | sed 's/^action-//'
-}
-
-main () {
-    matching_actions="$(list-actions | grep "^$1")"
-    match_count="$(echo "$matching_actions" | wc -l)"
-    if [[ $match_count == 0 ]]; then
-        echo "No action '$1' found" >&2
-    elif [[ $match_count == 1 ]]; then
-        shift
-        "action-$matching_actions" "$@"
-        return $?
-    else
-        echo "Ambiguous action name:" >&2
-        echo "$matching_actions" | sed 's/^/  /' >&2
-    fi
-    return 1
-}
+#-------------------------------------------------------------------------------
+# Start the main function
+#-------------------------------------------------------------------------------
 
 main "$@"
