@@ -6,6 +6,8 @@ Setup
 Running an unknown action
 
   $ ti almost-definitely-a-nonexistent-action
+  No action 'almost-definitely-a-nonexistent-action' found
+  [1]
 
 Running an ambiguous action
 FIXME: There are no ambiguous to test this functionality!
