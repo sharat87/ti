@@ -7,7 +7,7 @@ Note when not working
 
   $ ti note hee-haw
   For all I know, you aren't working on anything. I don't know what to do.
-  Use /home/sharat/calypso/labs/ti/test/../bin/ti on <project-name> [description]
+  Use .* on <project-name> \[description\] (re)
   [1]
 
 Start working and then note
