@@ -1,7 +1,7 @@
 /* @import url(http://fonts.googleapis.com/css?family=Salsa|Open+Sans|Inconsolata); */
 
 body {
-    background-color: #F2FCFF;
+    background-color: #EDF8FF;
     width: 960px;
     margin: 0 auto;
     font-size: 18px;
@@ -38,20 +38,14 @@ h1, h2, h3, h4, h5 {
 h1 {
     float: left;
     text-shadow:
-        /* left wing */
-        -10px 0 4px rgba(0, 100, 100, .3),
-        -20px 0 4px rgba(0, 100, 100, .25),
-        -30px 0 4px rgba(0, 100, 100, .2),
-        -40px 0 4px rgba(0, 100, 100, .15),
-        -50px 0 4px rgba(0, 100, 100, .1),
-        -60px 0 4px rgba(0, 100, 100, .05),
-        /* right wing */
-        10px 0 4px rgba(0, 100, 100, .3),
-        20px 0 4px rgba(0, 100, 100, .25),
-        30px 0 4px rgba(0, 100, 100, .2),
-        40px 0 4px rgba(0, 100, 100, .15),
-        50px 0 4px rgba(0, 100, 100, .1),
-        60px 0 4px rgba(0, 100, 100, .05);
+        10px 0 4px rgba(0, 100, 100, .4),
+        20px 0 4px rgba(0, 100, 100, .35),
+        30px 0 4px rgba(0, 100, 100, .3),
+        40px 0 4px rgba(0, 100, 100, .25),
+        50px 0 4px rgba(0, 100, 100, .2),
+        60px 0 4px rgba(0, 100, 100, .15),
+        70px 0 4px rgba(0, 100, 100, .1),
+        80px 0 4px rgba(0, 100, 100, .05);
 }
 
 h2 {
