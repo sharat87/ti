@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Salsa|Open+Sans|Inconsolata);
+/* @import url(http://fonts.googleapis.com/css?family=Salsa|Open+Sans|Inconsolata); */
 
 body {
     background-color: #F2FCFF;
@@ -6,12 +6,23 @@ body {
     margin: 0 auto;
     font-size: 18px;
     text-shadow: 1px 2px 1px rgba(240, 240, 255, .8);
+    font-family: sans-serif;
+}
+
+.wf-active body {
     font-family: "Open Sans", sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
+    font-family: serif;
+}
+
+.wf-active h1,
+.wf-active h2,
+.wf-active h3,
+.wf-active h4,
+.wf-active h5 {
     font-family: Salsa, serif;
-    text-shadow: 0 2px 5px rgba(0, 43, 53, .2);
 }
 
 h1 {
@@ -34,6 +45,10 @@ h1 {
 }
 
 h2 {
+    text-shadow: 0 2px 5px rgba(0, 43, 53, .2);
+}
+
+h2 {
     margin: 20px 0 5px;
 }
 
@@ -42,6 +57,11 @@ p {
 }
 
 pre, code {
+    font-family: monospace;
+}
+
+.wf-active pre,
+.wf-active code {
     font-family: Inconsolata, monospace;
 }
 
