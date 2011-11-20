@@ -13,6 +13,16 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
+.sociale {
+    float: right;
+    margin-top: 26px;
+}
+
+.sociale iframe,
+#___plusone_0 {
+    vertical-align: middle !important;
+}
+
 h1, h2, h3, h4, h5 {
     font-family: serif;
 }
@@ -26,7 +36,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    text-align: center;
+    float: left;
     text-shadow:
         /* left wing */
         -10px 0 4px rgba(0, 100, 100, .3),
@@ -77,4 +87,17 @@ pre.usage {
     background-color: #002B36;
     color: #93A1A1;
     box-shadow: inset 0 3px 12px rgba(0, 0, 0, .6);
+}
+
+/* Clearfix hack taken from http://css-tricks.com/snippets/css/clear-fix/ */
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+}
+.group:after {
+    clear: both;
+}
+.group {
+    zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
