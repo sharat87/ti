@@ -99,7 +99,9 @@ action-on () {
 action-fin () {
     ensure-working!
     stop_time="$(read-time "$@")"
-    echo >> $SHEET_FILE
+    if [[ -s $SHEET_FILE ]]; then
+        echo >> $SHEET_FILE
+    fi
     project="$(head -1 $SHEET_CURRENT_FILE | sed 's/ \[.\+$//')"
     head -1 $SHEET_CURRENT_FILE | sed "s^$^ to [$stop_time]^" >> $SHEET_FILE
     cat $SHEET_CURRENT_FILE | awk 'NR != 1' >> $SHEET_FILE
