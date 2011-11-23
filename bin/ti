@@ -139,7 +139,7 @@ action-status () {
     ensure-working!
     pline="$(head -1 $SHEET_CURRENT_FILE)"
     project="$(echo $pline | sed 's/ \[.\+$//')"
-    from_time="$(echo $pline | sed 's/^.\+\[//' | sed 's/\].*$//')"
+    from_time="$(echo $pline | sed -e 's/^.\+\[//' -e 's/\].*$//')"
     if hash dtime 2>&-; then
         echo "You have been working on $project for $(dtime "$from_time")."
     else
