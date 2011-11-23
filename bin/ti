@@ -119,6 +119,22 @@ action-note () {
     fi
 }
 
+action-tag () {
+    ensure-working!
+    if [[ $# = 0 ]]; then
+        echo "Please give a tag to apply to current activity." >&2
+        return 1
+    fi
+    temp_file="/tmp/$RANDOM"
+    for tag in $*; do
+        # Ensure there is one and only one # char at the start of the tag name
+        tag="#${tag#\#}"
+        cat "$SHEET_CURRENT_FILE" | sed "1s/$/ $tag/" > "$temp_file"
+        cat "$temp_file" > "$SHEET_CURRENT_FILE"
+    done
+    rm "$temp_file"
+}
+
 action-status () {
     ensure-working!
     pline="$(head -1 $SHEET_CURRENT_FILE)"
