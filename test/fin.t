@@ -27,6 +27,16 @@ Start a task and then fin
   $ test -f $SHEET_FILE-current
   [1]
 
+Fin a tagged activity
+
+  $ ti on tagged-one
+  Start working on tagged-one.
+  $ ti tag woohoo
+  $ ti fin
+  So you stopped working on tagged-one.
+  $ test -f $SHEET_FILE-current
+  [1]
+
 Check the current file existence
 
   $ ti on awesomeness

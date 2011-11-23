@@ -103,7 +103,7 @@ action-fin () {
         echo >> $SHEET_FILE
     fi
     project="$(head -1 $SHEET_CURRENT_FILE | sed 's/ \[.\+$//')"
-    head -1 $SHEET_CURRENT_FILE | sed "s^$^ to [$stop_time]^" >> $SHEET_FILE
+    head -1 $SHEET_CURRENT_FILE | sed "s^\]^] to [$stop_time]^" >> $SHEET_FILE
     cat $SHEET_CURRENT_FILE | awk 'NR != 1' >> $SHEET_FILE
     echo "So you stopped working on $project."
     rm $SHEET_CURRENT_FILE

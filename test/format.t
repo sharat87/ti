@@ -43,3 +43,22 @@ End and check
   
   another-project [date] to [date]
     a simple note
+
+Another one, with tags
+
+  $ ti on yet-another-project
+  Start working on yet-another-project.
+  $ dcat $SHEET_FILE-current
+  yet-another-project [date]
+  $ ti tag hella
+  $ dcat $SHEET_FILE-current
+  yet-another-project [date] #hella
+  $ ti fin
+  So you stopped working on yet-another-project.
+  $ dcat $SHEET_FILE
+  a-project [date] to [date]
+  
+  another-project [date] to [date]
+    a simple note
+  
+  yet-another-project [date] to [date] #hella
