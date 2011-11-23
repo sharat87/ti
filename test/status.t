@@ -17,6 +17,12 @@ Status after on-ing a task
   $ ti status
   You have been working on conqering-the-world for less than a minute.
 
+After adding tags
+
+  $ ti tag awesome
+  $ ti status
+  You have been working on conqering-the-world for less than a minute.
+
 Status after fin-ing it
 
   $ ti fin
