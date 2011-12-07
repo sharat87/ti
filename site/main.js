@@ -1,7 +1,7 @@
 (function (w, d) {
 
     w.WebFontConfig = {
-        google: { families: [ 'Salsa', 'Open Sans', 'Inconsolata' ] }
+        google: { families: [ 'Cagliostro', 'Open Sans', 'Inconsolata' ] }
     };
 
     var wf = d.createElement('script');
