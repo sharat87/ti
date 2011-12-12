@@ -54,24 +54,27 @@ def read_activities(sheet_file):
             if s]
 
 def age(from_date, since_date=None, target_tz=None, include_seconds=False):
+    tdelta = (since_date or dt.now(target_tz)) - from_date
+    return delta_to_age(tdelta)
+
+def delta_to_age(tdelta, include_seconds=False):
+    seconds = int(round(abs(tdelta.days * 86400 + tdelta.seconds)))
+    return seconds_to_words(seconds)
+
+def seconds_to_words(seconds, include_seconds=False):
     '''Returns the age as a string
     Taken from http://www.siafoo.net/snippet/89'''
 
-    if since_date is None:
-        since_date = dt.now(target_tz)
-
-    distance_in_time = since_date - from_date
-    distance_in_seconds = int(round(abs(distance_in_time.days * 86400 + distance_in_time.seconds)))
-    distance_in_minutes = int(round(distance_in_seconds/60))
+    distance_in_minutes = int(round(seconds/60))
 
     if distance_in_minutes <= 1:
         if include_seconds:
             for remainder in [5, 10, 20]:
-                if distance_in_seconds < remainder:
+                if seconds < remainder:
                     return "less than %s seconds" % remainder
-            if distance_in_seconds < 40:
+            if seconds < 40:
                 return "half a minute"
-            elif distance_in_seconds < 60:
+            elif seconds < 60:
                 return "less than a minute"
             else:
                 return "1 minute"
