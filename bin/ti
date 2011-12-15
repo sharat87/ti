@@ -82,7 +82,7 @@ expand-action-name () {
 
 action-on () {
     if [[ -f $SHEET_CURRENT_FILE ]]; then
-        echo 'You are already working on my-project. Stop it or use a different sheet.' >&2
+        echo 'You are already working on a project. Stop it or use a different sheet.' >&2
         return 1
     fi
     project_name="$1"
