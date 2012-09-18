@@ -32,7 +32,7 @@ action () {
         "action-$matching_actions" "$@"
         return $?
     else
-        echo "Ambiguous action name:" >&2
+        echo "Ambiguous action name (found $match_count actions):" >&2
         echo "$matching_actions" | sed 's/^/  /' >&2
     fi
     return 1
