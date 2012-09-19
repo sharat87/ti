@@ -24,7 +24,7 @@ main () {
 
 action () {
     matching_actions="$(expand-action-name "$1")"
-    match_count="$(echo "$matching_actions" | wc -l)"
+    match_count="$(echo "$matching_actions" | wc -l | sed 's/^\s*//')"
     if [[ -z $matching_actions ]]; then
         echo "No action '$1' found" >&2
     elif [[ $match_count == 1 ]]; then
