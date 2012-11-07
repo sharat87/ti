@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset=utf8>
+        <title>ti - A silly simple time tracker</title>
+        <link rel=canonical href=http://ti.sharats.me>
+
+        <link href=styles.css rel=stylesheet>
+
+    <body>
+
+        <header class=group>
+            <h1>ti</h1>
+            <div class=sociale>
+                <a href=https://twitter.com/share class=twitter-share-button
+                    data-count=horizontal data-via=sharat87>Tweet</a>
+                <div class="g-plusone"></div>
+                <a class=FlattrButton style=display:none rev=flattr;button:compact;
+                    href=http://ti.sharats.me></a>
+                <noscript>
+                    <a href=http://flattr.com/thing/438601/ti-A-simple-time-tracker-for-the-command-line
+                        target=_blank>
+                    <img src=http://api.flattr.com/button/flattr-badge-large.png
+                        alt="Flattr this" title="Flattr this" border=0></a>
+                </noscript>
+            </div>
+        </header>
+
+        <h2>wat?</h2>
+
+        <p> <code class=ti>ti</code> is a simple (very slightly) command line
+        time tracker. It is completely written in bash and has (almost)
+        complete test coverage.  It is inspired by <a target=_blank
+        href=http://adeel.github.com/timed/>timed</a>, which I felt a bit too
+        limiting in features. It also takes inspirateion from the simplicity of
+        <a target=_blank href=http://stevelosh.com/projects/t/>t</a>.</p>
+
+        <p> If a time tracker tool makes me think for more than 10 seconds, I
+        usually forget what I was concentrating on.  This is why I created
+        <code class=ti>ti</code>.  With <code class=ti>ti</code>, you'll be
+        only as fast as you can type, which you should be good with anyway.</p>
+
+        <p>The most important part about <code class=ti>ti</code> is that it
+        provides just a few commands to manage your time tracking and gets out
+        of your way.  Better yet, its tiny core is extendable so you can write
+        your own actions to make you even faster for stuff that <i>you</i>
+        frequently do. In that spirit, all data is saved in an easily readable
+        format by all humans, pythons, rubies and other pe<span
+        style=color:#AAA>a</span>rls.</p>
+
+        <p>Oh and by the way, the source is just a <a target=_blank
+        href=https://bitbucket.org/sharat87/ti/src/tip/bin/ti>~150 lines bash
+        script</a>, so if you know bash, I suggest you scim over it to get a
+        better feel of how this works.</p>
+
+        <h2>Usage</h2>
+
+        <p>Here's the minimal usage style:</p>
+
+        <pre class="usage hll">$ ti on my-project
+Start working on my-project.
+
+$ ti status
+You have been working on my-project for less than a minute.
+
+$ ti fin
+So you stopped working on my-project.</pre>
+
+        <p><code>on</code> and <code>fin</code> can take a time at which to
+        apply the action</p>
+
+        <pre class="usage hll">$ ti on another-project 2 hours ago
+Start working on another-project.
+
+$ ti st
+You have been working on another-project for about 2 hours.
+
+$ ti fin 30 minutes ago
+So you stopped working on another-project.</pre>
+
+        <p>Also illustrating in the previous example is any unambiguous prefix
+        (<code>st</code>) of available actions can be used instead of the whole
+        action name.</p>
+
+        <p>Put brief notes on what you've been doing.</p>
+
+        <pre class="usage hll">$ ti note waiting for Napoleon to take over the world
+$ ti n another simple note for demo purposes</pre>
+
+        <p>Tag your activities for fun and profit.</p>
+
+        <pre class="usage hll">$ ti tag imp</pre>
+
+        <p>Do plugins. For those that <i>need</i> the extra sauce.</p>
+
+        <pre class="usage hll">$ cat &lt;&lt;EOF &gt; ~/.ti/greeter.ti.sh
+&gt; action-greet () {
+&gt;     echo Hello there awesome ti user!
+&gt; }
+&gt; EOF
+
+$ ti greet # or just `ti gr`
+Hello there awesome ti user!</pre>
+
+        <p>That might not look like much, but with this simple exendability and
+            using the API (docs coming soon, for now you'll have to check the
+            source), you can create innovative actions. Stuff that analyse the
+            time sheet and give a report, make a report of a week and mail that
+            to yourself or your boss, simply echo the current project name so
+            you can use it to show info in your terminal prompt, what not?</p>
+
+        <h2>Status</h2>
+
+        <p>The project is still in its infancy. I'd like for people to check it
+            out and play with it.  Suggest more awesomeness and/or contribute
+            otherwise.</p>
+
+        <h2>Gimme!</h2>
+
+        <p>You can get <code class=ti>ti</code> <a
+                href=https://bitbucket.org/sharat87/ti>from the source on
+                bitbucket</a>. Put the `ti`  bash script (located in the bin
+            directory) somewhere in your $PATH and make sure it has executable
+            permissions and you should be able to use it just fine.</p>
+
+        <p>For the fancy relative time messages shown in the above usage
+            examples, you'll need the <a
+                href="https://bitbucket.org/sharat87/dtime"><code>dtime</code></a>
+            executable somewhere in your $PATH (visit its page for more
+            information).</p>
+
+        <p>Please note that currently, the tests succeed only if the above
+            mentioned dtime command is available. Otherwise, they fail. I'll
+            fix this soon.</p>
+
+        <h2>Who?</h2>
+
+        <p>Created and fed by Shrikant Sharat (<a target=_blank
+                href=https://twitter.com/#!sharat87>@sharat87</a>).  To get in
+            touch, ping me on twitter or <a
+                href=mailto:shrikantsharat.k@gmail.com>email</a>.</p>
+
+        <h2>License</h2>
+
+        <p><a target=_blank href=http://mit.sharats.me>MIT Licensed</a>.</p>
+
+        <script async type=text/javascript src=main.js></script>
+        <script async type=text/javascript src=//platform.twitter.com/widgets.js></script>
+        <script async type=text/javascript src=//apis.google.com/js/plusone.js></script>
+        <script async type=text/javascript src=http://api.flattr.com/js/0.6/load.js?mode=auto></script>
