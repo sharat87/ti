@@ -15,4 +15,4 @@ page](http://ti.sharats.me) for more details.
 
 #License
 
-[MIT License](http://mit.sharats.me).
+[MIT License](http://mitl.sharats.me).
