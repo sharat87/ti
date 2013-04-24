@@ -70,19 +70,30 @@ def action_on(args):
 
 
 def action_fin(args):
+    ensure_working()
+
     data = store.load()
     work = data['work']
-
-    if not work or 'end' in work[-1]:
-        print("For all I know, you aren't working on anything."
-                " I don't know what to do.", file=sys.stderr)
-        print('See `ti -h` to know how to start working.', file=sys.stderr)
-        raise SystemExit(1)
 
     work[-1]['end'] = to_datetime(args['<start-time>'])
     store.dump(data)
 
     print('So you stopped working on ' + work[-1]['name'] + '.')
+
+
+def is_working():
+    data = store.load()
+    return 'work' not in data or (data['work'] and 'end' in data['work'][-1])
+
+
+def ensure_working():
+    if is_working(): return
+
+    print("For all I know, you aren't working on anything."
+            " I don't know what to do.", file=sys.stderr)
+    print('See `ti -h` to know how to start working.', file=sys.stderr)
+    raise SystemExit(1)
+
 
 def to_datetime(timestr):
     if isinstance(timestr, list): timestr = ' '.join(timestr)
