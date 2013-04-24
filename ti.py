@@ -21,6 +21,8 @@ Options:
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from parse_time import parse_time
+
 from docopt import docopt
 import json
 from os import path
@@ -58,7 +60,7 @@ def action_on(args):
 
     entry = {
         'name': args['<project-name>'],
-        'start': 'now',
+        'start': to_datetime(args['<start-time>']),
     }
 
     work.append(entry)
@@ -77,10 +79,14 @@ def action_fin(args):
         print('See `ti -h` to know how to start working.', file=sys.stderr)
         raise SystemExit(1)
 
-    work[-1]['end'] = 'later'
+    work[-1]['end'] = to_datetime(args['<start-time>'])
     store.dump(data)
 
     print('So you stopped working on ' + work[-1]['name'] + '.')
+
+def to_datetime(timestr):
+    if isinstance(timestr, list): timestr = ' '.join(timestr)
+    return parse_time(timestr).isoformat() + 'Z'
 
 
 def main():
