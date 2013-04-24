@@ -67,11 +67,29 @@ def action_on(args):
     print('Start working on ' + entry['name'] + '.')
 
 
+def action_fin(args):
+    data = store.load()
+    work = data['work']
+
+    if not work or 'end' in work[-1]:
+        print("For all I know, you aren't working on anything."
+                " I don't know what to do.", file=sys.stderr)
+        print('See `ti -h` to know how to start working.', file=sys.stderr)
+        raise SystemExit(1)
+
+    work[-1]['end'] = 'later'
+    store.dump(data)
+
+    print('So you stopped working on ' + work[-1]['name'] + '.')
+
+
 def main():
     args = docopt(__doc__, version='2.0-alpha')
 
     if args['on']:
         action_on(args)
+    elif args['fin']:
+        action_fin(args)
 
 
 store = JsonStore('sheet')
