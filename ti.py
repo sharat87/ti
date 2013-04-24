@@ -119,6 +119,19 @@ def action_tag(args):
             ('s' if tag_count > 1 else '') + '.')
 
 
+def action_status(args):
+    try:
+        ensure_working()
+    except SystemExit:
+        return
+
+    data = store.load()
+    current = data['work'][-1]
+
+    print('You have been working on `{0[name]}` since `{0[start]}`.'
+            .format(current))
+
+
 def is_working():
     data = store.load()
     return data.get('work') and 'end' not in data['work'][-1]
@@ -149,6 +162,8 @@ def main():
         action_note(args)
     elif args['tag']:
         action_tag(args)
+    elif args['status']:
+        action_status(args)
 
 
 store = JsonStore('sheet')
