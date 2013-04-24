@@ -8,7 +8,7 @@ Usage:
   ti fin [<start-time>...]
   ti status
   ti tag <tag>...
-  ti note
+  ti note <note-text>...
   ti edit
   ti -h | --help
   ti version | --version
@@ -73,12 +73,30 @@ def action_fin(args):
     ensure_working()
 
     data = store.load()
-    work = data['work']
+    current = data['work'][-1]
 
-    work[-1]['end'] = to_datetime(args['<start-time>'])
+    current['end'] = to_datetime(args['<start-time>'])
     store.dump(data)
 
-    print('So you stopped working on ' + work[-1]['name'] + '.')
+    print('So you stopped working on ' + current['name'] + '.')
+
+
+def action_note(args):
+    ensure_working()
+
+    data = store.load()
+    current = data['work'][-1]
+
+    content = ' '.join(args['<note-text>'])
+
+    if 'notes' not in current:
+        current['notes'] = [content]
+    else:
+        current['notes'].append(content)
+
+    store.dump(data)
+
+    print('Yep, noted to `' + current['name'] + '`.')
 
 
 def is_working():
@@ -107,6 +125,8 @@ def main():
         action_on(args)
     elif args['fin']:
         action_fin(args)
+    elif args['note']:
+        action_note(args)
 
 
 store = JsonStore('sheet')
