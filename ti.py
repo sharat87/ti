@@ -83,7 +83,7 @@ def action_fin(args):
 
 def is_working():
     data = store.load()
-    return 'work' not in data or (data['work'] and 'end' in data['work'][-1])
+    return data.get('work') and 'end' not in data['work'][-1]
 
 
 def ensure_working():
