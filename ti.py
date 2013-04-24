@@ -14,8 +14,10 @@ Usage:
   ti version | --version
 
 Options:
+  -h --help         Show this help.
   <start-time>...   A time specification (Described further down).
-  -h --help     Show this help.
+  <tag>...          Tags can be made of any characters, but its probably a good
+                    idea to avoid whitespace.
 """
 
 from __future__ import print_function
@@ -99,6 +101,24 @@ def action_note(args):
     print('Yep, noted to `' + current['name'] + '`.')
 
 
+def action_tag(args):
+    ensure_working()
+
+    tags = args['<tag>']
+
+    data = store.load()
+    current = data['work'][-1]
+
+    current['tags'] = set(current.get('tags') or [])
+    current['tags'].update(tags)
+
+    store.dump(data)
+
+    tag_count = str(len(tags))
+    print('Okay, tagged current work with ' + tag_count + ' tag' +
+            ('s' if tag_count > 1 else '') + '.')
+
+
 def is_working():
     data = store.load()
     return data.get('work') and 'end' not in data['work'][-1]
@@ -127,6 +147,8 @@ def main():
         action_fin(args)
     elif args['note']:
         action_note(args)
+    elif args['tag']:
+        action_tag(args)
 
 
 store = JsonStore('sheet')
