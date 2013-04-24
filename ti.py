@@ -4,12 +4,11 @@
 ti is a simple and extensible time tracker for the command line.
 
 Usage:
-  ti on <project-name> [<start-time>...]
-  ti fin [<start-time>...]
-  ti status
-  ti tag <tag>...
-  ti note <note-text>...
-  ti edit
+  ti (o|on) <project-name> [<start-time>...]
+  ti (f|fin) [<start-time>...]
+  ti (s|status)
+  ti (t|tag) <tag>...
+  ti (n|note) <note-text>...
   ti -h | --help
   ti version | --version
 
@@ -153,16 +152,17 @@ def to_datetime(timestr):
 
 def main():
     args = docopt(__doc__, version='2.0-alpha')
+    print(args)
 
-    if args['on']:
+    if args['o'] or args['on']:
         action_on(args)
-    elif args['fin']:
+    elif args['f'] or args['fin']:
         action_fin(args)
-    elif args['note']:
+    elif args['n'] or args['note']:
         action_note(args)
-    elif args['tag']:
+    elif args['t'] or args['tag']:
         action_tag(args)
-    elif args['status']:
+    elif args['s'] or args['status']:
         action_status(args)
 
 
