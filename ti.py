@@ -198,7 +198,8 @@ def main():
         action_status(args)
 
 
-store = JsonStore(os.getenv('SHEET_FILE', 'sheet'))
+store = JsonStore(os.getenv('SHEET_FILE', None) or
+                    os.path.userexpand('~/.ti-sheet'))
 
 if __name__ == '__main__':
     main()
