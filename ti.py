@@ -22,11 +22,10 @@ Options:
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from parse_time import parse_time
-
 from docopt import docopt
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
+import re
 import os
 from os import path
 import sys
@@ -154,6 +153,20 @@ def ensure_working():
 def to_datetime(timestr):
     if isinstance(timestr, list): timestr = ' '.join(timestr)
     return parse_time(timestr).isoformat() + 'Z'
+
+
+def parse_time(timestr):
+
+    now = datetime.utcnow()
+    if not timestr or timestr.strip() == 'now':
+        return now
+
+    match = re.match(r'(\d+) \s* (mins?|minutes?) \s+ ago $', timestr, re.X)
+    if match is not None:
+        minutes = int(match.group(1))
+        return now - timedelta(minutes=minutes)
+
+    raise ValueError("Don't understand the time '" + timestr + "'")
 
 
 def timegap(start_time, end_time):
