@@ -26,6 +26,7 @@ from parse_time import parse_time
 
 from docopt import docopt
 import json
+from datetime import datetime
 import os
 from os import path
 import sys
@@ -129,8 +130,11 @@ def action_status(args):
     data = store.load()
     current = data['work'][-1]
 
-    print('You have been working on `{0[name]}` since `{0[start]}`.'
-            .format(current))
+    start_time = datetime.strptime(current['start'], '%Y-%m-%dT%H:%M:%S.%fZ')
+    diff = timegap(start_time, datetime.utcnow())
+
+    print('You have been working on `{0[name]}` since {1}.'
+            .format(current, diff))
 
 
 def is_working():
@@ -150,6 +154,32 @@ def ensure_working():
 def to_datetime(timestr):
     if isinstance(timestr, list): timestr = ' '.join(timestr)
     return parse_time(timestr).isoformat() + 'Z'
+
+
+def timegap(start_time, end_time):
+    diff = end_time - start_time
+
+    s = diff.seconds
+    if diff.days > 7 or diff.days < 0:
+        return start_time.strftime('%d %b %y')
+    elif diff.days == 1:
+        return 'yesterday'
+    elif diff.days > 1:
+        return '{} days ago'.format(diff.days)
+    elif s < 20:
+        return 'a few seconds ago'
+    elif s < 60:
+        return 'less than a minute ago'
+    elif s < 120:
+        return 'a minute ago'
+    elif s < 600:
+        return 'a few minutes ago'
+    elif s < 3600:
+        return '{} minutes ago'.format(s/60)
+    elif s < 7200:
+        return 'an hour ago'
+    else:
+        return '{} hours ago'.format(s/3600)
 
 
 def main():
