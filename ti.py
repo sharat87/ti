@@ -26,6 +26,7 @@ from parse_time import parse_time
 
 from docopt import docopt
 import json
+import os
 from os import path
 import sys
 
@@ -110,6 +111,7 @@ def action_tag(args):
 
     current['tags'] = set(current.get('tags') or [])
     current['tags'].update(tags)
+    current['tags'] = list(current['tags'])
 
     store.dump(data)
 
@@ -165,7 +167,7 @@ def main():
         action_status(args)
 
 
-store = JsonStore('sheet')
+store = JsonStore(os.getenv('SHEET_FILE', 'sheet'))
 
 if __name__ == '__main__':
     main()

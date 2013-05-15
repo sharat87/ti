@@ -7,21 +7,21 @@ Status when not working
 
   $ ti status
   For all I know, you aren't working on anything. I don't know what to do.
-  Use .* on <project-name> \[description\] (re)
-  [1]
+  See `ti -h` to know how to start working.
 
 Status after on-ing a task
 
   $ ti on conqering-the-world
   Start working on conqering-the-world.
   $ ti status
-  You have been working on conqering-the-world for less than a minute.
+  You have been working on `conqering-the-world` for less than a minute.
 
 After adding tags
 
   $ ti tag awesome
+  Okay, tagged current work with 1 tags.
   $ ti status
-  You have been working on conqering-the-world for less than a minute.
+  You have been working on `conqering-the-world` for less than a minute.
 
 Status after fin-ing it
 
@@ -29,12 +29,10 @@ Status after fin-ing it
   So you stopped working on conqering-the-world.
   $ ti status
   For all I know, you aren't working on anything. I don't know what to do.
-  Use .* on <project-name> \[description\] (re)
-  [1]
+  See `ti -h` to know how to start working.
 
-Short alias `st` for status
+Short alias `s` for status
 
-  $ ti st
+  $ ti s
   For all I know, you aren't working on anything. I don't know what to do.
-  Use .* on <project-name> \[description\] (re)
-  [1]
+  See `ti -h` to know how to start working.

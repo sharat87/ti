@@ -7,7 +7,7 @@ Note when not working
 
   $ ti note hee-haw
   For all I know, you aren't working on anything. I don't know what to do.
-  Use .* on <project-name> \[description\] (re)
+  See `ti -h` to know how to start working.
   [1]
 
 Start working and then note
@@ -15,18 +15,23 @@ Start working and then note
   $ ti on donkey-music
   Start working on donkey-music.
   $ ti note hee-haw
-  $ cat $SHEET_FILE-current | tail -1
-    hee-haw
+  Yep, noted to `donkey-music`.
 
 Add another longer note
 
   $ ti note holla hoy with a longer musical? note
-  $ cat $SHEET_FILE-current | tail -2
-    hee-haw
-    holla hoy with a longer musical? note
+  Yep, noted to `donkey-music`.
 
 Note with external editor
 FIXME: Need a better EDITOR to test with
 
   $ EDITOR="false" ti note
+  Usage:
+    ti (o|on) <project-name> [<start-time>...]
+    ti (f|fin) [<start-time>...]
+    ti (s|status)
+    ti (t|tag) <tag>...
+    ti (n|note) <note-text>...
+    ti -h | --help
+    ti version | --version
   [1]

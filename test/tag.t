@@ -7,7 +7,7 @@ When not working
 
   $ ti tag a-tag
   For all I know, you aren't working on anything. I don't know what to do.
-  Use /home/sharat/labs/ti/test/../bin/ti on <project-name> [description]
+  See `ti -h` to know how to start working.
   [1]
 
 Not giving a tag to add
@@ -15,5 +15,12 @@ Not giving a tag to add
   $ ti on something
   Start working on something.
   $ ti tag
-  Please give a tag to apply to current activity.
+  Usage:
+    ti (o|on) <project-name> [<start-time>...]
+    ti (f|fin) [<start-time>...]
+    ti (s|status)
+    ti (t|tag) <tag>...
+    ti (n|note) <note-text>...
+    ti -h | --help
+    ti version | --version
   [1]

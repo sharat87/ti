@@ -6,7 +6,14 @@ Setup
 Running an unknown action
 
   $ ti almost-definitely-a-nonexistent-action
-  No action 'almost-definitely-a-nonexistent-action' found
+  Usage:
+    ti (o|on) <project-name> [<start-time>...]
+    ti (f|fin) [<start-time>...]
+    ti (s|status)
+    ti (t|tag) <tag>...
+    ti (n|note) <note-text>...
+    ti -h | --help
+    ti version | --version
   [1]
 
 Running an ambiguous action

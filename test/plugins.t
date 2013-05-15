@@ -1,3 +1,7 @@
+Skip, for python implementation
+
+  $ exit 80
+
 Setup
 
   $ export SHEET_FILE=$TMP/sheet-plugins
