@@ -48,7 +48,7 @@ class JsonStore(object):
 
     def dump(self, data):
         with open(self.filename, 'w') as f:
-            json.dump(data, f)
+            json.dump(data, f, separators=(',', ': '), indent=2)
 
 
 def action_on(args):
