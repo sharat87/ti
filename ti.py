@@ -152,7 +152,6 @@ def to_datetime(timestr):
 
 def main():
     args = docopt(__doc__, version='2.0-alpha')
-    print(args)
 
     if args['o'] or args['on']:
         action_on(args)
