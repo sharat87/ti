@@ -13,7 +13,7 @@ You can also give it human-readable times.
 `ti` sports many other cool features. See the [project
 page](http://ti.sharats.me) for more details.
 
-# Wat?
+## Wat?
 
 `ti` is a simple command line time tracker. It has been completely re-written in
 python (from being a bash script) and has (almost) complete test coverage. It is
@@ -45,7 +45,7 @@ tied up to only work on linux, you might notice the lack of *plugins* in this
 python version. I am not really missing them, so I might not add them. If anyone
 has any interesting use cases for it, I'm willing to consider.
 
-# Usage
+## Usage
 
 Here's the minimal usage style:
 
@@ -81,24 +81,24 @@ Tag your activities for fun and profit.
 
     $ ti tag imp
 
-# Status
+## Status
 
 The project is beta. If you find any bug or have any feedback, please do open an
 issue on [Github issues](https://github.com/sharat87/ti/issues).
 
-# Gimme!
+## Gimme!
 
 You can download `ti` [from the source on
 github](https://raw.github.com/sharat87/ti/master/bin/ti)</a>. Put it somewhere
 in your `$PATH` and make sure it has executable permissions and you should be
 able to use it just fine.
 
-# Who?
+## Who?
 
 Created and fed by Shrikant Sharat
 ([@sharat87](https://twitter.com/#!sharat87)). To get in touch, ping me on
 twitter or <a href=mailto:shrikantsharat.k@gmail.com>email</a>.
 
-# License
+## License
 
 [MIT License](http://mitl.sharats.me).
