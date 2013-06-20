@@ -11,7 +11,6 @@ Usage:
   ti (t|tag) <tag>...
   ti (n|note) <note-text>...
   ti -h | --help
-  ti version | --version
 
 Options:
   -h --help         Show this help.
