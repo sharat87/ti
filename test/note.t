@@ -26,12 +26,4 @@ Note with external editor
 FIXME: Need a better EDITOR to test with
 
   $ EDITOR="false" ti note
-  Usage:
-    ti (o|on) <project-name> [<start-time>...]
-    ti (f|fin) [<start-time>...]
-    ti (s|status)
-    ti (t|tag) <tag>...
-    ti (n|note) <note-text>...
-    ti -h | --help
-    ti version | --version
-  [1]
+  Please provide some text to be noted.

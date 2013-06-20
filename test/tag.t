@@ -15,12 +15,4 @@ Not giving a tag to add
   $ ti on something
   Start working on something.
   $ ti tag
-  Usage:
-    ti (o|on) <project-name> [<start-time>...]
-    ti (f|fin) [<start-time>...]
-    ti (s|status)
-    ti (t|tag) <tag>...
-    ti (n|note) <note-text>...
-    ti -h | --help
-    ti version | --version
-  [1]
+  Please provide at least one tag to add.

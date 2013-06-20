@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # encoding: utf-8
 
 """
@@ -22,7 +23,7 @@ Options:
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from docopt import docopt
+from collections import namedtuple
 import json
 from datetime import datetime, timedelta
 import re
@@ -51,7 +52,7 @@ class JsonStore(object):
             json.dump(data, f, separators=(',', ': '), indent=2)
 
 
-def action_on(args):
+def action_on(name, time):
     data = store.load()
     work = data['work']
 
@@ -61,35 +62,33 @@ def action_on(args):
         raise SystemExit(1)
 
     entry = {
-        'name': args['<project-name>'],
-        'start': to_datetime(args['<start-time>']),
+        'name': name,
+        'start': time,
     }
 
     work.append(entry)
     store.dump(data)
 
-    print('Start working on ' + entry['name'] + '.')
+    print('Start working on ' + name + '.')
 
 
-def action_fin(args):
+def action_fin(time):
     ensure_working()
 
     data = store.load()
     current = data['work'][-1]
 
-    current['end'] = to_datetime(args['<start-time>'])
+    current['end'] = time
     store.dump(data)
 
     print('So you stopped working on ' + current['name'] + '.')
 
 
-def action_note(args):
+def action_note(content):
     ensure_working()
 
     data = store.load()
     current = data['work'][-1]
-
-    content = ' '.join(args['<note-text>'])
 
     if 'notes' not in current:
         current['notes'] = [content]
@@ -101,10 +100,8 @@ def action_note(args):
     print('Yep, noted to `' + current['name'] + '`.')
 
 
-def action_tag(args):
+def action_tag(tags):
     ensure_working()
-
-    tags = args['<tag>']
 
     data = store.load()
     current = data['work'][-1]
@@ -120,7 +117,7 @@ def action_tag(args):
             ('s' if tag_count > 1 else '') + '.')
 
 
-def action_status(args):
+def action_status():
     try:
         ensure_working()
     except SystemExit:
@@ -151,7 +148,6 @@ def ensure_working():
 
 
 def to_datetime(timestr):
-    if isinstance(timestr, list): timestr = ' '.join(timestr)
     return parse_time(timestr).isoformat() + 'Z'
 
 
@@ -196,23 +192,66 @@ def timegap(start_time, end_time):
         return 'more than a year'
 
 
-def main():
-    args = docopt(__doc__, version='2.0-alpha')
+def helpful_exit(msg=__doc__):
+    print(msg, file=sys.stderr)
+    raise SystemExit
 
-    if args['o'] or args['on']:
-        action_on(args)
-    elif args['f'] or args['fin']:
-        action_fin(args)
-    elif args['n'] or args['note']:
-        action_note(args)
-    elif args['t'] or args['tag']:
-        action_tag(args)
-    elif args['s'] or args['status']:
-        action_status(args)
+
+def parse_args(argv=sys.argv):
+    # prog = argv[0]
+    head = argv[1]
+    tail = argv[2:]
+
+    ParsedArgs = namedtuple('ParsedArgs', 'fn, args')
+
+    if head in ['-h', '--help']:
+        helpful_exit()
+
+    elif head in ['o', 'on']:
+        if not tail:
+            helpful_exit('Need the name of whatever you are working on.')
+
+        fn = action_on
+        args = {
+            'name': tail[0],
+            'time': to_datetime(' '.join(tail[1:])),
+        }
+
+    elif head in ['f', 'fin']:
+        fn = action_fin
+        args = {'time': to_datetime(' '.join(tail[1:]))}
+
+    elif head in ['s', 'status']:
+        fn = action_status
+        args = {}
+
+    elif head in ['t', 'tag']:
+        if not tail:
+            helpful_exit('Please provide at least one tag to add.')
+
+        fn = action_tag
+        args = {'tags': tail}
+
+    elif head in ['n', 'note']:
+        if not tail:
+            helpful_exit('Please provide some text to be noted.')
+
+        fn = action_note
+        args = {'content': ' '.join(tail)}
+
+    else:
+        helpful_exit("I don't understand '" + head + "'")
+
+    return ParsedArgs(fn, args)
+
+
+def main():
+    action = parse_args()
+    action.fn(**action.args)
 
 
 store = JsonStore(os.getenv('SHEET_FILE', None) or
-                    os.path.userexpand('~/.ti-sheet'))
+                    os.path.expanduser('~/.ti-sheet'))
 
 if __name__ == '__main__':
     main()
