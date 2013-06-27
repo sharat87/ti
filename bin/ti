@@ -159,9 +159,10 @@ def parse_time(timestr):
     if not timestr or timestr.strip() == 'now':
         return now
 
-    match = re.match(r'(\d+) \s* (mins?|minutes?) \s+ ago $', timestr, re.X)
+    match = re.match(r'(\d+|a) \s* (mins?|minutes?) \s+ ago $', timestr, re.X)
     if match is not None:
-        minutes = int(match.group(1))
+        n = match.group(1)
+        minutes = 1 if n == 'a' else int(n)
         return now - timedelta(minutes=minutes)
 
     raise ValueError("Don't understand the time '" + timestr + "'")

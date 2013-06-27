@@ -93,6 +93,7 @@ handled, but should be, please open an issue about it or a pull request
     - *n*minute ago
     - *n*mins ago
     - *n*min ago
+    - `a` in place of *n* in all above cases.
 
 Where *n* is an arbitrary number.
 
