@@ -198,6 +198,9 @@ def helpful_exit(msg=__doc__):
 
 def parse_args(argv=sys.argv):
     # prog = argv[0]
+    if len(argv) == 1:
+        helpful_exit('You must specify a command.')
+
     head = argv[1]
     tail = argv[2:]
 
