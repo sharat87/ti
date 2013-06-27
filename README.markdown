@@ -58,7 +58,8 @@ Here's the minimal usage style:
     $ ti fin
     So you stopped working on my-project.
 
-`on` and `fin` can take a time at which to apply the action.
+`on` and `fin` can take a time (format described further down) at which to apply
+the action.
 
     $ ti on another-project 2 hours ago
     Start working on another-project.
@@ -80,6 +81,20 @@ Put brief notes on what you've been doing.
 Tag your activities for fun and profit.
 
     $ ti tag imp
+
+## Time format
+
+Currently only the following are recognized. If there is something that is not
+handled, but should be, please open an issue about it or a pull request
+(function in question is `parse_time`)
+
+- *n* minutes ago can be written as:
+    - *n*minutes ago
+    - *n*minute ago
+    - *n*mins ago
+    - *n*min ago
+
+Where *n* is an arbitrary number.
 
 ## Status
 
