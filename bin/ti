@@ -26,7 +26,6 @@ Options:
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from collections import namedtuple
 import json
 from datetime import datetime, timedelta
 import re
@@ -208,8 +207,6 @@ def parse_args(argv=sys.argv):
     head = argv[1]
     tail = argv[2:]
 
-    ParsedArgs = namedtuple('ParsedArgs', 'fn, args')
-
     if head in ['-h', '--help']:
         helpful_exit()
 
@@ -248,12 +245,12 @@ def parse_args(argv=sys.argv):
     else:
         helpful_exit("I don't understand '" + head + "'")
 
-    return ParsedArgs(fn, args)
+    return fn, args
 
 
 def main():
-    action = parse_args()
-    action.fn(**action.args)
+    fn, args = parse_args()
+    fn(**args)
 
 
 store = JsonStore(os.getenv('SHEET_FILE', None) or
