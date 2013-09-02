@@ -88,14 +88,33 @@ Currently only the following are recognized. If there is something that is not
 handled, but should be, please open an issue about it or a pull request
 (function in question is `parse_time`)
 
+- *n* seconds ago can be written as:
+    - *n*seconds ago
+    - *n*second ago
+    - *n*secs ago
+    - *n*sec ago
+    - *n*s ago
+    - `a` in place of *n* in all above cases, to mean 1 second.
+    - Eg., `10s ago`, `a sec ago` `25 seconds ago`, `25seconds ago`.
+
 - *n* minutes ago can be written as:
     - *n*minutes ago
     - *n*minute ago
     - *n*mins ago
     - *n*min ago
-    - `a` in place of *n* in all above cases.
+    - `a` in place of *n* in all above cases, to mean 1 minute.
+    - Eg., `5mins ago`, `a minute ago`, `10 minutes ago`.
 
-Where *n* is an arbitrary number.
+- *n* hours ago can be written as:
+    - *n*hours ago
+    - *n*hour ago
+    - *n*hrs ago
+    - *n*hr ago
+    - `a` or `an` in place of *n* in all above cases, to mean 1 hour.
+    - Eg., `an hour ago`, `an hr ago`, `2hrs ago`.
+
+Where *n* is an arbitrary number and any number of spaces between *n* and the
+time unit are allowed.
 
 ## Status
 
