@@ -11,6 +11,7 @@ Usage:
   ti (s|status)
   ti (t|tag) <tag>...
   ti (n|note) <note-text>...
+  ti (l|log) [today]
   ti -h | --help
 
 Options:
