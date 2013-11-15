@@ -28,6 +28,7 @@ from __future__ import unicode_literals
 
 import json
 from datetime import datetime, timedelta
+from collections import defaultdict
 import re
 import os
 from os import path
@@ -128,11 +129,27 @@ def action_status():
     data = store.load()
     current = data['work'][-1]
 
-    start_time = datetime.strptime(current['start'], '%Y-%m-%dT%H:%M:%S.%fZ')
+    start_time = parse_isotime(current['start'])
     diff = timegap(start_time, datetime.utcnow())
 
     print('You have been working on `{0[name]}` for {1}.'
             .format(current, diff))
+
+
+def action_log(period):
+    work = store.load()['work']
+    log = defaultdict(timedelta)
+    current = None
+
+    for item in work:
+        if 'end' in item:
+            log[item['name']] += parse_isotime(item['end']) - parse_isotime(item['start'])
+        else:
+            log[item['name']] += datetime.now() - parse_isotime(item['start'])
+            current = item['name']
+
+    for name, time in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
+        print(name, '→', time, end=' ← working\n' if current == name else '\n')
 
 
 def is_working():
@@ -150,10 +167,10 @@ def ensure_working():
 
 
 def to_datetime(timestr):
-    return parse_time(timestr).isoformat() + 'Z'
+    return parse_engtime(timestr).isoformat() + 'Z'
 
 
-def parse_time(timestr):
+def parse_engtime(timestr):
 
     now = datetime.utcnow()
     if not timestr or timestr.strip() == 'now':
@@ -178,6 +195,10 @@ def parse_time(timestr):
         return now - timedelta(hours=hours)
 
     raise ValueError("Don't understand the time '" + timestr + "'")
+
+
+def parse_isotime(isotime):
+    return datetime.strptime(isotime, '%Y-%m-%dT%H:%M:%S.%fZ')
 
 
 def timegap(start_time, end_time):
@@ -242,6 +263,10 @@ def parse_args(argv=sys.argv):
     elif head in ['s', 'status']:
         fn = action_status
         args = {}
+
+    elif head in ['l', 'log']:
+        fn = action_log
+        args = {'period': tail[0] if tail else None}
 
     elif head in ['t', 'tag']:
         if not tail:
