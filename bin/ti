@@ -149,8 +149,27 @@ def action_log(period):
             log[item['name']] += datetime.utcnow() - start_time
             current = item['name']
 
-    for name, time in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
-        print(name, '→', time, end=' ← working\n' if current == name else '\n')
+    for name, td in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
+
+        secs = td.seconds
+        tmsg = []
+
+        if secs > 3600:
+            hours = int(secs / 3600)
+            secs -= hours * 3600
+            tmsg.append(str(hours) + ' hour' + ('s' if hours > 1 else ''))
+
+        if secs > 60:
+            mins = int(secs / 60)
+            secs -= mins * 60
+            tmsg.append(str(mins) + ' minute' + ('s' if mins > 1 else ''))
+
+        if secs:
+            tmsg.append(str(secs) + ' second' + ('s' if secs > 1 else ''))
+
+        tmsg = ', '.join(tmsg)[::-1].replace(',', ' &'[::-1], 1)[::-1]
+
+        print(name, '→', tmsg, end=' ← working\n' if current == name else '\n')
 
 
 def is_working():
