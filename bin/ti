@@ -142,10 +142,11 @@ def action_log(period):
     current = None
 
     for item in work:
+        start_time = parse_isotime(item['start'])
         if 'end' in item:
-            log[item['name']] += parse_isotime(item['end']) - parse_isotime(item['start'])
+            log[item['name']] += parse_isotime(item['end']) - start_time
         else:
-            log[item['name']] += datetime.now() - parse_isotime(item['start'])
+            log[item['name']] += datetime.utcnow() - start_time
             current = item['name']
 
     for name, time in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
