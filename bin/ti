@@ -138,20 +138,23 @@ def action_status():
 
 def action_log(period):
     work = store.load()['work']
-    log = defaultdict(timedelta)
+    log = defaultdict(lambda: {'delta': timedelta()})
     current = None
 
     for item in work:
         start_time = parse_isotime(item['start'])
         if 'end' in item:
-            log[item['name']] += parse_isotime(item['end']) - start_time
+            log[item['name']]['delta'] += parse_isotime(item['end']) - start_time
         else:
-            log[item['name']] += datetime.utcnow() - start_time
+            log[item['name']]['delta'] += datetime.utcnow() - start_time
             current = item['name']
 
-    for name, td in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
+    name_col_len = 0
 
-        secs = td.seconds
+    for name, item in log.items():
+        name_col_len = max(name_col_len, len(name))
+
+        secs = item['delta'].seconds
         tmsg = []
 
         if secs > 3600:
@@ -167,9 +170,11 @@ def action_log(period):
         if secs:
             tmsg.append(str(secs) + ' second' + ('s' if secs > 1 else ''))
 
-        tmsg = ', '.join(tmsg)[::-1].replace(',', ' &'[::-1], 1)[::-1]
+        log[name]['tmsg'] = ', '.join(tmsg)[::-1].replace(',', ' &'[::-1], 1)[::-1]
 
-        print(name, '→', tmsg, end=' ← working\n' if current == name else '\n')
+    for name, item in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
+        print(name.ljust(name_col_len), ' ∙∙ ', item['tmsg'],
+                end=' ← working\n' if current == name else '\n')
 
 
 def is_working():
