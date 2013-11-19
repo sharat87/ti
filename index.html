@@ -1,168 +1,232 @@
 <!doctype html>
-<html>
+<meta charset=utf8>
+<title>ti - A silly simple time tracker</title>
+<link rel=canonical href=http://ti.sharats.me>
+<link rel=stylesheet href=styles.css>
 
-    <head>
-        <meta charset=utf8>
-        <title>ti - A silly simple time tracker</title>
-        <link rel=canonical href=http://ti.sharats.me>
+<div class=sociale>
+  <a href=https://twitter.com/share class=twitter-share-button
+    data-count=horizontal data-via=sharat87>Tweet</a>
+  <iframe src="//www.facebook.com/plugins/like.php?href=http://ti.sharats.me/&send=false&layout=button_count&width=120&show_faces=true&font&colorscheme=light&action=like&height=20"
+      scrolling=no frameborder=0 style="border:none; overflow:hidden; width:120px; height:20px;"
+      allowTransparency=true></iframe>
+  <div class=g-plusone></div>
+  <a class=FlattrButton style=display:none rev=flattr;button:compact;
+    href=http://ti.sharats.me></a>
+  <noscript>
+    <a href=http://flattr.com/thing/438601/ti-A-simple-time-tracker-for-the-command-line
+      target=_blank>
+      <img src=http://api.flattr.com/button/flattr-badge-large.png
+      alt="Flattr this" title="Flattr this" border=0></a>
+  </noscript>
+  <iframe src="http://ghbtns.com/github-btn.html?user=sharat87&repo=ti&type=watch&count=true"
+      height=30 width=118 frameborder=0 scrolling=0 style="width:118px; height: 30px;"
+      allowTransparency=true></iframe>
+</div>
 
-        <link href=styles.css rel=stylesheet>
-
-    <body>
-
-        <header class=group>
-            <h1>ti</h1>
-            <div class=sociale>
-                <a href=https://twitter.com/share class=twitter-share-button
-                    data-count=horizontal data-via=sharat87>Tweet</a>
-                <div class="g-plusone"></div>
-                <a class=FlattrButton style=display:none rev=flattr;button:compact;
-                    href=http://ti.sharats.me></a>
-                <noscript>
-                    <a href=http://flattr.com/thing/438601/ti-A-simple-time-tracker-for-the-command-line
-                        target=_blank>
-                    <img src=http://api.flattr.com/button/flattr-badge-large.png
-                        alt="Flattr this" title="Flattr this" border=0></a>
-                </noscript>
-            </div>
-        </header>
-
-        <p id=obsolete-msg>This is <b>obsolete</b> information. Please refer to
-        the <a href=https://github.com/sharat87/ti>project page</a> for updated
-        information about the `ti` project. I will update this site soon.</p>
-        <style>
-            #obsolete-msg {
-                background: #C60;
-                color: #FEC;
-                text-shadow: none;
-                padding: 3px 6px;
-                border-radius: 3px;
-                border: 1px solid #A50;
-            }
-            #obsolete-msg a {
-                color: white;
-            }
-        </style>
-
-        <h2>wat?</h2>
-
-        <p> <code class=ti>ti</code> is a simple (very slightly) command line
-        time tracker. It is completely written in bash and has (almost)
-        complete test coverage.  It is inspired by <a target=_blank
-        href=http://adeel.github.com/timed/>timed</a>, which I felt a bit too
-        limiting in features. It also takes inspiration from the simplicity of
-        <a target=_blank href=http://stevelosh.com/projects/t/>t</a>.</p>
-
-        <p> If a time tracker tool makes me think for more than 10 seconds, I
-        usually forget what I was concentrating on.  This is why I created
-        <code class=ti>ti</code>.  With <code class=ti>ti</code>, you'll be
-        only as fast as you can type, which you should be good with anyway.</p>
-
-        <p>The most important part about <code class=ti>ti</code> is that it
-        provides just a few commands to manage your time tracking and gets out
-        of your way.  Better yet, its tiny core is extendible so you can write
-        your own actions to make you even faster for stuff that <i>you</i>
-        frequently do. In that spirit, all data is saved in an easily readable
-        format by all humans, pythons, rubies and other pe<span
-        style=color:#AAA>a</span>rls.</p>
-
-        <p>Oh and by the way, the source is just a <a target=_blank
-        href=https://github.com/sharat87/ti/blob/master/bin/ti>~150 lines bash
-        script</a>, so if you know bash, I suggest you skim over it to get a
-        better feel of how this works.</p>
-
-        <h2>Usage</h2>
-
-        <p>Here's the minimal usage style:</p>
-
-        <pre class="usage hll">$ ti on my-project
+<h1>ti - A silly simple time tracker</h1>
+<p><code>ti</code> is a small command line time tracking application. Simple basic usage
+looks like this</p>
+<pre><code>$ ti on my-project
+$ ti fin
+</code></pre>
+<p>You can also give it human-readable times.</p>
+<pre><code>$ ti on my-project 30mins ago
+</code></pre>
+<p><code>ti</code> sports many other cool features. Read along to discover.</p>
+<h2>Wat?</h2>
+<p><code>ti</code> is a simple command line time tracker. It has been completely re-written in
+python (from being a bash script) and has (almost) complete test coverage. It is
+inspired by <a href="http://adeel.github.com/timed">timed</a>, which is a nice project
+and you should check out if you don't like <code>ti</code>. It also takes inspiration from
+the simplicity of <a href="http://stevelosh.com/projects/t/">t</a>.</p>
+<p>If a time tracker tool makes me think for more than 3-5 seconds, I lose my line
+of thought and forget what I was doing. This is why I created <code>ti</code>. With <code>ti</code>,
+you'll be as fast as you can type, which you should be good with anyway.</p>
+<p>The most important part about <code>ti</code> is that it
+provides just a few commands to manage your time tracking and gets out
+of your way. All data is saved in a JSON file (<code>~/.ti-sheet</code>, can be changed by
+setting <code>$SHEET_FILE</code>) for easy access to whatever you need to do. Some ideas,</p>
+<ul>
+<li>Read your json file to generate beautiful html reports.</li>
+<li>Build monthly statistics based on tags or the tasks themselves.</li>
+<li>Read the currently working project and make it show up in your terminal
+  prompt. May be even with how long you've been on it. (!!!)</li>
+</ul>
+<p>Its <em>your</em> data.</p>
+<p>Oh and by the way, the source is a fairly small python script, so if you know
+python, you may want to skim over it to get a better feel of how it works.</p>
+<p><em>Note</em>: If you have used the previous bash version of <code>ti</code>, which was horribly
+tied up to only work on linux, you might notice the lack of <em>plugins</em> in this
+python version. I am not really missing them, so I might not add them. If anyone
+has any interesting use cases for it, I'm willing to consider.</p>
+<h2>Usage</h2>
+<p>Here's the minimal usage style:</p>
+<pre><code>$ ti on my-project
 Start working on my-project.
 
 $ ti status
 You have been working on my-project for less than a minute.
 
 $ ti fin
-So you stopped working on my-project.</pre>
-
-        <p><code>on</code> and <code>fin</code> can take a time at which to
-        apply the action</p>
-
-        <pre class="usage hll">$ ti on another-project 2 hours ago
+So you stopped working on my-project.
+</code></pre>
+<p><code>on</code> and <code>fin</code> can take a time (format described further down) at which to apply
+the action.</p>
+<pre><code>$ ti on another-project 2 hours ago
 Start working on another-project.
 
-$ ti st
+$ ti s
 You have been working on another-project for about 2 hours.
 
 $ ti fin 30 minutes ago
-So you stopped working on another-project.</pre>
+So you stopped working on another-project.
+</code></pre>
+<p>Also illustrating in the previous example is short aliases of all commands,
+their first letter. Like, <code>s</code> for <code>status</code>, <code>o</code> for <code>on</code>, <code>f</code> for <code>fin</code>, etc.</p>
+<p>Put brief notes on what you've been doing.</p>
+<pre><code>$ ti note waiting for Napoleon to take over the world
+$ ti n another simple note for demo purposes
+</code></pre>
+<p>Tag your activities for fun and profit.</p>
+<pre><code>$ ti tag imp
+</code></pre>
+<p>Get a log of all activities with the <code>log</code> (or <code>l</code>) command.</p>
+<pre><code>$ ti log
+</code></pre>
+<h2>Command reference</h2>
+<p>Run <code>ti -h</code> (or <code>--help</code> or <code>help</code> or just <code>h</code>) to get a short command summary
+of commands.</p>
+<h3>on</h3>
+<ul>
+<li>Short: <code>o</code></li>
+<li>Syntax: <code>ti (o|on) &lt;name&gt; [&lt;time&gt;...]</code></li>
+</ul>
+<p>Start tracking time for the project/activity given by <code>&lt;name&gt;</code>. For example,</p>
+<pre><code>ti on conquest
+</code></pre>
+<p>tells <code>ti</code> to start tracking for the activitiy <code>conquest</code> <em>now</em>. You can
+optionally specify a relative time in the past like so,</p>
+<pre><code>ti on conquest 10mins ago
+</code></pre>
+<p>The format of the time is detailed further below.</p>
+<h3>fin</h3>
+<ul>
+<li>Short: <code>f</code></li>
+<li>Syntax: <code>ti (f|fin) [&lt;time&gt;...]</code></li>
+</ul>
+<p>End tracking for the current activity <em>now</em>. Just like with <code>on</code> command above,
+you can give an optional time to the past. Example</p>
+<pre><code>ti fin 10mins ago
+</code></pre>
+<p>tells <code>ti</code> that you finished working on the current activity at, well, 10
+minutes ago.</p>
+<h3>status</h3>
+<ul>
+<li>Short: <code>s</code></li>
+<li>Syntax: <code>ti (s|status)</code></li>
+</ul>
+<p>Gives short human readable message on the current status. i.e., whether anything
+is being tracked currently or not. Example,</p>
+<pre><code>$ ti on conqering-the-world
+Start working on conqering-the-world.
+$ ti status
+You have been working on `conqering-the-world` for less than a minute.
+</code></pre>
+<h3>tag</h3>
+<ul>
+<li>Short: <code>t</code></li>
+<li>Syntax: <code>ti (t|tag) &lt;tag&gt;...</code></li>
+</ul>
+<p>This command adds the given tags to the current activity. Tags are not currently
+used within the <code>ti</code> time tracker, but they will be saved in the json data file.
+You may use them for whatever purposes you like.</p>
+<p>For example, if you have a script to generate a html report from your <code>ti</code> data,
+you could tag some activities with a tag like <code>red</code> or <code>important</code> so that, that
+activity will appear in red in the final html report.</p>
+<p>Use it like,</p>
+<pre><code>ti tag red for-joe
+</code></pre>
+<p>adds the tags <code>red</code> and <code>for-joe</code> to the current activitiy. You can specify any
+number of tags.</p>
+<p>Tags are currently for your purpose. Use them as you see fit.</p>
+<h3>note</h3>
+<ul>
+<li>Short: <code>n</code></li>
+<li>Syntax: <code>ti (n|note) &lt;note-text&gt;...</code></li>
+</ul>
+<p>This command adds a note on the current activity. Again, like tags, this has no
+significance with the time tracking aspect of <code>ti</code>. This is for your own
+recording purposes and for the scripts your write to process your <code>ti</code> data.</p>
+<p>Use it like,</p>
+<pre><code>ti note Discuss this with the other team.
+</code></pre>
+<p>adds the note <code>Discuss this with the other team.</code> to the current activity.</p>
+<h3>log</h3>
+<ul>
+<li>Short: <code>l</code></li>
+<li>Syntax: <code>ti (l|log) [today]</code></li>
+</ul>
+<p>Gives a table like representation of all activities and total time spent on each
+of them.</p>
+<h2>Time format</h2>
+<p>Currently only the following are recognized. If there is something that is not
+handled, but should be, please open an issue about it or a pull request
+(function in question is <code>parse_time</code>)</p>
+<ul>
+<li>
+<p><em>n</em> seconds ago can be written as:</p>
+<ul>
+<li><em>n</em>seconds ago</li>
+<li><em>n</em>second ago</li>
+<li><em>n</em>secs ago</li>
+<li><em>n</em>sec ago</li>
+<li><em>n</em>s ago</li>
+<li><code>a</code> in place of <em>n</em> in all above cases, to mean 1 second.</li>
+<li>Eg., <code>10s ago</code>, <code>a sec ago</code> <code>25 seconds ago</code>, <code>25seconds ago</code>.</li>
+</ul>
+</li>
+<li>
+<p><em>n</em> minutes ago can be written as:</p>
+<ul>
+<li><em>n</em>minutes ago</li>
+<li><em>n</em>minute ago</li>
+<li><em>n</em>mins ago</li>
+<li><em>n</em>min ago</li>
+<li><code>a</code> in place of <em>n</em> in all above cases, to mean 1 minute.</li>
+<li>Eg., <code>5mins ago</code>, <code>a minute ago</code>, <code>10 minutes ago</code>.</li>
+</ul>
+</li>
+<li>
+<p><em>n</em> hours ago can be written as:</p>
+<ul>
+<li><em>n</em>hours ago</li>
+<li><em>n</em>hour ago</li>
+<li><em>n</em>hrs ago</li>
+<li><em>n</em>hr ago</li>
+<li><code>a</code> or <code>an</code> in place of <em>n</em> in all above cases, to mean 1 hour.</li>
+<li>Eg., <code>an hour ago</code>, <code>an hr ago</code>, <code>2hrs ago</code>.</li>
+</ul>
+</li>
+</ul>
+<p>Where <em>n</em> is an arbitrary number and any number of spaces between <em>n</em> and the
+time unit are allowed.</p>
+<h2>Status</h2>
+<p>The project is beta. If you find any bug or have any feedback, please do open an
+issue on <a href="https://github.com/sharat87/ti/issues">Github issues</a>.</p>
+<h2>Gimme!</h2>
+<p>You can download <code>ti</code> <a href="https://raw.github.com/sharat87/ti/master/bin/ti">from the source on
+github</a></a>. Put it somewhere
+in your <code>$PATH</code> and make sure it has executable permissions and you should be
+able to use it just fine.</p>
+<p>Also, visit the <a href="https://github.com/sharat87/ti">project page on github</a>.</p>
+<h2>Who?</h2>
+<p>Created and fed by Shrikant Sharat
+(<a href="https://twitter.com/#!sharat87">@sharat87</a>). To get in touch, ping me on
+twitter or <a href=mailto:shrikantsharat.k@gmail.com>email</a>.</p>
+<h2>License</h2>
+<p><a href="http://mitl.sharats.me">MIT License</a>.</p>
 
-        <p>Also illustrating in the previous example is any unambiguous prefix
-        (<code>st</code>) of available actions can be used instead of the whole
-        action name.</p>
-
-        <p>Put brief notes on what you've been doing.</p>
-
-        <pre class="usage hll">$ ti note waiting for Napoleon to take over the world
-$ ti n another simple note for demo purposes</pre>
-
-        <p>Tag your activities for fun and profit.</p>
-
-        <pre class="usage hll">$ ti tag imp</pre>
-
-        <p>Do plugins. For those that <i>need</i> the extra sauce.</p>
-
-        <pre class="usage hll">$ cat &lt;&lt;EOF &gt; ~/.ti/greeter.ti.sh
-&gt; action-greet () {
-&gt;     echo Hello there awesome ti user!
-&gt; }
-&gt; EOF
-
-$ ti greet # or just `ti gr`
-Hello there awesome ti user!</pre>
-
-        <p>That might not look like much, but with this simple extendability and
-            using the API (docs coming soon, for now you'll have to check the
-            source), you can create innovative actions. Stuff that analyse the
-            time sheet and give a report, make a report of a week and mail that
-            to yourself or your boss, simply echo the current project name so
-            you can use it to show info in your terminal prompt, what not?</p>
-
-        <h2>Status</h2>
-
-        <p>The project is still in its infancy. I'd like for people to check it
-            out and play with it.  Suggest more awesomeness and/or contribute
-            otherwise.</p>
-
-        <h2>Gimme!</h2>
-
-        <p>You can get <code class=ti>ti</code> <a
-                href=https://github.com/sharat87/ti>from the source on
-                github</a>. Put the `ti`  bash script (located in the bin
-            directory) somewhere in your $PATH and make sure it has executable
-            permissions and you should be able to use it just fine.</p>
-
-        <p>For the fancy relative time messages shown in the above usage
-            examples, you'll need the <a
-                href="https://bitbucket.org/sharat87/dtime"><code>dtime</code></a>
-            executable somewhere in your $PATH (visit its page for more
-            information).</p>
-
-        <p>Please note that currently, the tests succeed only if the above
-            mentioned `dtime` command is available. Otherwise, they fail. I'll
-            fix this soon.</p>
-
-        <h2>Who?</h2>
-
-        <p>Created and fed by Shrikant Sharat (<a target=_blank
-                href=https://twitter.com/#!sharat87>@sharat87</a>).  To get in
-            touch, ping me on twitter or <a
-                href=mailto:shrikantsharat.k@gmail.com>email</a>.</p>
-
-        <h2>License</h2>
-
-        <p><a target=_blank href=http://mitl.sharats.me>MIT Licensed</a>.</p>
-
-        <script async type=text/javascript src=main.js></script>
-        <script async type=text/javascript src=//platform.twitter.com/widgets.js></script>
-        <script async type=text/javascript src=//apis.google.com/js/plusone.js></script>
-        <script async type=text/javascript src=http://api.flattr.com/js/0.6/load.js?mode=auto></script>
+<script async src=//platform.twitter.com/widgets.js></script>
+<script async src=//apis.google.com/js/plusone.js></script>
+<script async src=http://api.flattr.com/js/0.6/load.js?mode=auto></script>
