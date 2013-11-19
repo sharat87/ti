@@ -269,7 +269,7 @@ def parse_args(argv=sys.argv):
     head = argv[1]
     tail = argv[2:]
 
-    if head in ['-h', '--help']:
+    if head in ['-h', '--help', 'h', 'help']:
         helpful_exit()
 
     elif head in ['o', 'on']:
