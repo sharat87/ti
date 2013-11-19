@@ -1,4 +1,4 @@
-# ti - A silly simple time tracker
+# ti &mdash; A silly simple time tracker
 
 `ti` is a small command line time tracking application. Simple basic usage
 looks like this

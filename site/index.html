@@ -1,8 +1,13 @@
 <!doctype html>
 <meta charset=utf8>
-<title>ti - A silly simple time tracker</title>
+<title>ti &mdash; A silly simple time tracker</title>
 <link rel=canonical href=http://ti.sharats.me>
 <link rel=stylesheet href=styles.css>
+
+<%block filter="markdown">
+<% with open('../README.markdown') as f: readme = f.read() %>
+${readme}
+</%block>
 
 <div class=sociale>
   <a href=https://twitter.com/share class=twitter-share-button
@@ -23,14 +28,6 @@
       height=30 width=118 frameborder=0 scrolling=0 style="width:118px; height: 30px;"
       allowTransparency=true></iframe>
 </div>
-
-<%block filter="markdown">
-<%
-with open('../README.markdown') as f:
-    readme = f.read()
-%>
-${readme}
-</%block>
 
 <script async src=//platform.twitter.com/widgets.js></script>
 <script async src=//apis.google.com/js/plusone.js></script>
