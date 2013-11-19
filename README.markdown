@@ -10,8 +10,7 @@ You can also give it human-readable times.
 
     $ ti on my-project 30mins ago
 
-`ti` sports many other cool features. See the [project
-page](http://ti.sharats.me) for more details.
+`ti` sports many other cool features. Read along to discover.
 
 ## Wat?
 
@@ -223,6 +222,8 @@ You can download `ti` [from the source on
 github](https://raw.github.com/sharat87/ti/master/bin/ti)</a>. Put it somewhere
 in your `$PATH` and make sure it has executable permissions and you should be
 able to use it just fine.
+
+Also, visit the [project page on github](https://github.com/sharat87/ti).
 
 ## Who?
 

@@ -1,0 +1,45 @@
+body {
+    font: 18px sans-serif;
+    background-color: #F8F8FF;
+    width: 960px;
+    margin: 0 auto;
+    text-shadow: 1px 2px 1px rgba(240, 240, 255, .8);
+}
+
+.sociale {
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: rgba(255, 255, 255, .8);
+    border-style: solid;
+    border-color: rgba(0, 0, 0, .2);
+    border-width: 0 0 1px 1px;
+    border-bottom-left-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+    padding-top: 12px;
+}
+
+.sociale > * {
+    display: block;
+    /* The plusone widget sets zero margin in element style. So need !important. */
+    margin: 0 12px 12px !important;
+}
+
+p {
+    line-height: 1.5em;
+}
+
+pre, p code {
+    font: monospace;
+    background-color: rgba(0, 0, 0, .1);
+    border-radius: 3px;
+}
+
+p code {
+    padding: 3px 6px;
+}
+
+pre {
+    padding: 3px 12px 7px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+}

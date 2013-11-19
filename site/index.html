@@ -1,0 +1,37 @@
+<!doctype html>
+<meta charset=utf8>
+<title>ti - A silly simple time tracker</title>
+<link rel=canonical href=http://ti.sharats.me>
+<link rel=stylesheet href=styles.css>
+
+<div class=sociale>
+  <a href=https://twitter.com/share class=twitter-share-button
+    data-count=horizontal data-via=sharat87>Tweet</a>
+  <iframe src="//www.facebook.com/plugins/like.php?href=http://ti.sharats.me/&send=false&layout=button_count&width=120&show_faces=true&font&colorscheme=light&action=like&height=20"
+      scrolling=no frameborder=0 style="border:none; overflow:hidden; width:120px; height:20px;"
+      allowTransparency=true></iframe>
+  <div class=g-plusone></div>
+  <a class=FlattrButton style=display:none rev=flattr;button:compact;
+    href=http://ti.sharats.me></a>
+  <noscript>
+    <a href=http://flattr.com/thing/438601/ti-A-simple-time-tracker-for-the-command-line
+      target=_blank>
+      <img src=http://api.flattr.com/button/flattr-badge-large.png
+      alt="Flattr this" title="Flattr this" border=0></a>
+  </noscript>
+  <iframe src="http://ghbtns.com/github-btn.html?user=sharat87&repo=ti&type=watch&count=true"
+      height=30 width=118 frameborder=0 scrolling=0 style="width:118px; height: 30px;"
+      allowTransparency=true></iframe>
+</div>
+
+<%block filter="markdown">
+<%
+with open('../README.markdown') as f:
+    readme = f.read()
+%>
+${readme}
+</%block>
+
+<script async src=//platform.twitter.com/widgets.js></script>
+<script async src=//apis.google.com/js/plusone.js></script>
+<script async src=http://api.flattr.com/js/0.6/load.js?mode=auto></script>

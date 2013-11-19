@@ -9,3 +9,6 @@ tests:
 
 itests:
 	cram -i test
+
+siteserve:
+	cd site && pygreen serve
