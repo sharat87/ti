@@ -16,3 +16,4 @@ serve-site:
 gen-site:
 	cd site && pygreen gen build
 	ghp-import -n site/build
+	rm -r site/build
