@@ -82,6 +82,102 @@ Tag your activities for fun and profit.
 
     $ ti tag imp
 
+Get a log of all activities with the `log` (or `l`) command.
+
+    $ ti log
+
+## Command reference
+
+Run `ti -h` (or `--help` or `help` or just `h`) to get a short command summary
+of commands.
+
+### on
+
+- Short: `o`
+- Syntax: `ti (o|on) <name> [<time>...]`
+
+Start tracking time for the project/activity given by `<name>`. For example,
+
+    ti on conquest
+
+tells `ti` to start tracking for the activitiy `conquest` *now*. You can
+optionally specify a relative time in the past like so,
+
+    ti on conquest 10mins ago
+
+The format of the time is detailed further below.
+
+### fin
+
+- Short: `f`
+- Syntax: `ti (f|fin) [<time>...]`
+
+End tracking for the current activity *now*. Just like with `on` command above,
+you can give an optional time to the past. Example
+
+    ti fin 10mins ago
+
+tells `ti` that you finished working on the current activity at, well, 10
+minutes ago.
+
+### status
+
+- Short: `s`
+- Syntax: `ti (s|status)`
+
+Gives short human readable message on the current status. i.e., whether anything
+is being tracked currently or not. Example,
+
+    $ ti on conqering-the-world
+    Start working on conqering-the-world.
+    $ ti status
+    You have been working on `conqering-the-world` for less than a minute.
+
+### tag
+
+- Short: `t`
+- Syntax: `ti (t|tag) <tag>...`
+
+This command adds the given tags to the current activity. Tags are not currently
+used within the `ti` time tracker, but they will be saved in the json data file.
+You may use them for whatever purposes you like.
+
+For example, if you have a script to generate a html report from your `ti` data,
+you could tag some activities with a tag like `red` or `important` so that, that
+activity will appear in red in the final html report.
+
+Use it like,
+
+    ti tag red for-joe
+
+adds the tags `red` and `for-joe` to the current activitiy. You can specify any
+number of tags.
+
+Tags are currently for your purpose. Use them as you see fit.
+
+### note
+
+- Short: `n`
+- Syntax: `ti (n|note) <note-text>...`
+
+This command adds a note on the current activity. Again, like tags, this has no
+significance with the time tracking aspect of `ti`. This is for your own
+recording purposes and for the scripts your write to process your `ti` data.
+
+Use it like,
+
+    ti note Discuss this with the other team.
+
+adds the note `Discuss this with the other team.` to the current activity.
+
+### log
+
+- Short: `l`
+- Syntax: `ti (l|log) [today]`
+
+Gives a table like representation of all activities and total time spent on each
+of them.
+
 ## Time format
 
 Currently only the following are recognized. If there is something that is not
