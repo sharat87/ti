@@ -124,7 +124,7 @@ def action_tag(tags):
 def action_status():
     try:
         ensure_working()
-    except SystemExit:
+    except SystemExit(1):
         return
 
     data = store.load()
