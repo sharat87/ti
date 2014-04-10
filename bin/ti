@@ -12,6 +12,7 @@ Usage:
   ti (t|tag) <tag>...
   ti (n|note) <note-text>...
   ti (l|log) [today]
+  ti (e|edit)
   ti -h | --help
 
 Options:
@@ -27,11 +28,11 @@ Options:
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import json
+import json, yaml
 from datetime import datetime, timedelta
 from collections import defaultdict
 import re
-import os
+import os, tempfile
 from os import path
 import sys
 
@@ -178,6 +179,36 @@ def action_log(period):
                 end=' ← working\n' if current == name else '\n')
 
 
+def action_edit():
+    if 'EDITOR' not in os.environ:
+        print("Please set the 'EDITOR' environment variable", file=sys.stderr)
+        raise SystemExit(1)
+
+    data = store.load()
+    yml = yaml.safe_dump(data, default_flow_style=False, allow_unicode=True)
+
+    cmd = os.getenv('EDITOR')
+    fd, temp_path = tempfile.mkstemp(prefix='ti.')
+    with open(temp_path, "r+") as f:
+        f.write(yml)
+        f.seek(0)
+        os.system(cmd + ' %s' % temp_path)
+        yml = f.read()
+        f.truncate()
+        f.close
+
+    os.close(fd)
+    os.remove(temp_path)
+
+    try:
+      data = yaml.load(yml)
+    except:
+      print("Oops, that YAML didn't appear to be valid!", file=sys.stderr)
+      raise SystemExit(1)
+
+    store.dump(data)
+
+
 def is_working():
     data = store.load()
     return data.get('work') and 'end' not in data['work'][-1]
@@ -271,6 +302,10 @@ def parse_args(argv=sys.argv):
 
     if head in ['-h', '--help', 'h', 'help']:
         helpful_exit()
+
+    elif head in ['e', 'edit']:
+        fn = action_edit
+        args = {}
 
     elif head in ['o', 'on']:
         if not tail:
