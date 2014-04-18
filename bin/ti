@@ -190,7 +190,7 @@ def action_edit():
     cmd = os.getenv('EDITOR')
     fd, temp_path = tempfile.mkstemp(prefix='ti.')
     with open(temp_path, "r+") as f:
-        f.write(yml)
+        f.write(yml.replace('\n- ', '\n\n- '))
         f.seek(0)
         subprocess.check_call(cmd + ' ' + temp_path, shell=True)
         yml = f.read()
