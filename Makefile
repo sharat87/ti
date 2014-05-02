@@ -7,13 +7,16 @@ PYENV := source .pyenv/bin/activate
 default: tests
 
 tests:
-	cram test
+	${PYENV} && cram test
 
 itests:
-	cram -i test
+	${PYENV} && cram -i test
+
+deps:
+	${PYENV} && pip install -r requirements.txt
 
 serve-site:
-	cd site && pygreen serve
+	${PYENV} cd site && pygreen serve
 
 gen-site:
 	${PYENV} && cd site && pygreen gen build
