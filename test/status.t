@@ -8,6 +8,7 @@ Status when not working
   $ ti status
   For all I know, you aren't working on anything. I don't know what to do.
   See `ti -h` to know how to start working.
+  [1]
 
 Status after on-ing a task
 
@@ -30,9 +31,11 @@ Status after fin-ing it
   $ ti status
   For all I know, you aren't working on anything. I don't know what to do.
   See `ti -h` to know how to start working.
+  [1]
 
 Short alias `s` for status
 
   $ ti s
   For all I know, you aren't working on anything. I don't know what to do.
   See `ti -h` to know how to start working.
+  [1]
