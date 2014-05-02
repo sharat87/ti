@@ -219,11 +219,15 @@ issue on [Github issues](https://github.com/sharat87/ti/issues).
 ## Gimme!
 
 You can download `ti` [from the source on
-github](https://raw.github.com/sharat87/ti/master/bin/ti)</a>. Put it somewhere
-in your `$PATH` and make sure it has executable permissions and you should be
-able to use it just fine.
+github](https://raw.github.com/sharat87/ti/master/bin/ti)</a>.
 
-Also, visit the [project page on github](https://github.com/sharat87/ti).
+- Put it somewhere in your `$PATH` and make sure it has executable permissions.
+- Install pyyaml using the command `pip install --user pyyaml`.
+
+After that, `ti` should be working fine.
+
+Also, visit the [project page on github](https://github.com/sharat87/ti) for any
+further details.
 
 ## Who?
 
