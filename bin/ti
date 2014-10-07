@@ -13,6 +13,7 @@ Usage:
   ti (n|note) <note-text>...
   ti (l|log) [today]
   ti (e|edit)
+  ti (i|interrupt)
   ti -h | --help
 
 Options:
@@ -48,13 +49,17 @@ class JsonStore(object):
                 data = json.load(f)
 
         else:
-            data = {'work': []}
+            data = {'work': [], 'interrupt_stack': []}
 
         return data
 
     def dump(self, data):
         with open(self.filename, 'w') as f:
             json.dump(data, f, separators=(',', ': '), indent=2)
+
+
+def get_current(data):
+    return (data['interrupt_stack'] or data['work'])[-1]
 
 
 def action_on(name, time):
@@ -81,12 +86,45 @@ def action_fin(time):
     ensure_working()
 
     data = store.load()
-    current = data['work'][-1]
+
+    if len(data['interrupt_stack']) > 0:
+        current = data['interrupt_stack'].pop()
+        interrupted = get_current(data)
+        data['work'].insert(-1, current)
+    else:
+        current = data['work'][-1]
+        interrupted = None
 
     current['end'] = time
     store.dump(data)
 
-    print('So you stopped working on ' + current['name'] + '.')
+    if interrupted is not None:
+        print('Interrupt %s is done, you\'re back to working on %s' % (current['name'], interrupted['name']))
+    else:
+        print('So you stopped working on ' + current['name'] + '.')
+
+
+def action_interrupt(name, time):
+    ensure_working()
+
+    data = store.load()
+    if 'interrupt_stack' not in data:
+        data['interrupt_stack'] = []
+    interrupt_stack = data['interrupt_stack']
+
+    entry = {
+        'name': 'interrupt: ' + name,
+        'start': time
+    }
+
+    interrupted = get_current(data)
+    interrupt_stack.append(entry)
+    store.dump(data)
+
+    current = data['work'][-1]
+
+    print('Interrupting %s with %s. You are now %d deep in interrupts.' %
+          (interrupted['name'], entry['name'], len(interrupt_stack)))
 
 
 def action_note(content):
@@ -139,7 +177,8 @@ def action_status():
 
 
 def action_log(period):
-    work = store.load()['work']
+    data = store.load()
+    work = data['work'] + data['interrupt_stack']
     log = defaultdict(lambda: {'delta': timedelta()})
     current = None
 
@@ -342,6 +381,16 @@ def parse_args(argv=sys.argv):
 
         fn = action_note
         args = {'content': ' '.join(tail)}
+
+    elif head in ['i', 'interrupt']:
+        if not tail:
+            helpful_exit('Need the name of whatever you are working on.')
+
+        fn = action_interrupt
+        args = {
+            'name': tail[0],
+            'time': to_datetime(' '.join(tail[1:])),
+        }
 
     else:
         helpful_exit("I don't understand '" + head + "'")
