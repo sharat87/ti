@@ -99,7 +99,7 @@ def action_fin(time):
     store.dump(data)
 
     if interrupted is not None:
-        print('Interrupt %s is done, you\'re back to working on %s' % (current['name'], interrupted['name']))
+        print('%s is done, you\'re back to working on %s.' % (current['name'], interrupted['name']))
     else:
         print('So you stopped working on ' + current['name'] + '.')
 
