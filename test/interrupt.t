@@ -8,12 +8,20 @@ Go two deep in interrupts
   $ ti o task
   Start working on task.
   $ ti i interrupt1
-  Interrupting task with interrupt: interrupt1. You are now 1 deep in interrupts.
+  So you stopped working on task.
+  Start working on interrupt: interrupt1.
+  You are now 1 deep in interrupts.
   $ ti i interrupt2
-  Interrupting interrupt: interrupt1 with interrupt: interrupt2. You are now 2 deep in interrupts.
+  So you stopped working on interrupt: interrupt1.
+  Start working on interrupt: interrupt2.
+  You are now 2 deep in interrupts.
   $ ti f
-  interrupt: interrupt2 is done, you're back to working on interrupt: interrupt1.
+  So you stopped working on interrupt: interrupt2.
+  Start working on interrupt: interrupt1.
+  You are now 1 deep in interrupts.
   $ ti f
-  interrupt: interrupt1 is done, you're back to working on task.
+  So you stopped working on interrupt: interrupt1.
+  Start working on task.
+  Congrats, you're out of interrupts!
   $ ti f
   So you stopped working on task.

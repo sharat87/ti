@@ -58,10 +58,6 @@ class JsonStore(object):
             json.dump(data, f, separators=(',', ': '), indent=2)
 
 
-def get_current(data):
-    return (data['interrupt_stack'] or data['work'])[-1]
-
-
 def action_on(name, time):
     data = store.load()
     work = data['work']
@@ -82,49 +78,43 @@ def action_on(name, time):
     print('Start working on ' + name + '.')
 
 
-def action_fin(time):
+def action_fin(time, back_from_interrupt=True):
     ensure_working()
 
     data = store.load()
 
-    if len(data['interrupt_stack']) > 0:
-        current = data['interrupt_stack'].pop()
-        interrupted = get_current(data)
-        data['work'].insert(-1, current)
-    else:
-        current = data['work'][-1]
-        interrupted = None
-
+    current = data['work'][-1]
     current['end'] = time
     store.dump(data)
+    print('So you stopped working on ' + current['name'] + '.')
 
-    if interrupted is not None:
-        print('%s is done, you\'re back to working on %s.' % (current['name'], interrupted['name']))
-    else:
-        print('So you stopped working on ' + current['name'] + '.')
+    if back_from_interrupt and len(data['interrupt_stack']) > 0:
+        name = data['interrupt_stack'].pop()['name']
+        store.dump(data)
+        action_on(name, time)
+        if len(data['interrupt_stack']) > 0:
+            print('You are now %d deep in interrupts.' % len(data['interrupt_stack']))
+        else:
+            print('Congrats, you\'re out of interrupts!')
 
 
 def action_interrupt(name, time):
     ensure_working()
 
+    action_fin(time, back_from_interrupt=False)
+
     data = store.load()
     if 'interrupt_stack' not in data:
         data['interrupt_stack'] = []
     interrupt_stack = data['interrupt_stack']
+    work = data['work']
 
-    entry = {
-        'name': 'interrupt: ' + name,
-        'start': time
-    }
-
-    interrupted = get_current(data)
-    interrupt_stack.append(entry)
+    interrupted = data['work'][-1]
+    interrupt_stack.append(interrupted)
     store.dump(data)
 
-    current = data['work'][-1]
-
-    print('Interrupting %s with %s. You are now %d deep in interrupts.' %
-          (interrupted['name'], entry['name'], len(interrupt_stack)))
+    action_on('interrupt: ' + name, time)
+    print('You are now %d deep in interrupts.' % len(interrupt_stack))
 
 
 def action_note(content):
