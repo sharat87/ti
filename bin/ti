@@ -59,7 +59,7 @@ class JsonStore(object):
 
 
 def get_current(data):
-    return (data['interrupt_stack'] or data['work'])[-1]
+    return data['work'][-1]
 
 
 def action_on(name, time):
@@ -87,19 +87,25 @@ def action_fin(time):
 
     data = store.load()
 
+    current = data['work'][-1]
+
     if len(data['interrupt_stack']) > 0:
-        current = data['interrupt_stack'].pop()
-        interrupted = get_current(data)
-        data['work'].insert(-1, current)
+        #get the name of the next task to be restarted from the interrupt stack
+        interrupted = data['interrupt_stack'].pop()
+
+        entry = {
+            'name': interrupted,
+            'start': time
+        }
+        data['work'].append(entry)
     else:
-        current = data['work'][-1]
         interrupted = None
 
     current['end'] = time
     store.dump(data)
 
     if interrupted is not None:
-        print('%s is done, you\'re back to working on %s.' % (current['name'], interrupted['name']))
+        print('%s is done, you\'re back to working on %s.' % (current['name'], interrupted))
     else:
         print('So you stopped working on ' + current['name'] + '.')
 
@@ -112,13 +118,20 @@ def action_interrupt(name, time):
         data['interrupt_stack'] = []
     interrupt_stack = data['interrupt_stack']
 
+    #end the current task
+    interrupted = get_current(data)
+    interrupted['end'] = time
+
+    #add the current task name to the interrupt_stack
+    interrupt_stack.append(interrupted['name'])
+
+    #add the new task to the tip of the work stream
     entry = {
-        'name': 'interrupt: ' + name,
+        'name': name,
         'start': time
     }
 
-    interrupted = get_current(data)
-    interrupt_stack.append(entry)
+    data['work'].append(entry)
     store.dump(data)
 
     current = data['work'][-1]
@@ -176,9 +189,17 @@ def action_status():
             .format(current, diff))
 
 
+    if len(data['interrupt_stack']) > 0:
+        indent = '  '
+        print('Interrupt Stack:')
+        print(indent + current['name'])
+        for interrupt in reversed(data['interrupt_stack']):
+            indent = indent + '  '
+            print(indent + interrupt)
+
 def action_log(period):
     data = store.load()
-    work = data['work'] + data['interrupt_stack']
+    work = data['work']
     log = defaultdict(lambda: {'delta': timedelta()})
     current = None
 
