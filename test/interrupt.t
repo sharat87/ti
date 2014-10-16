@@ -6,14 +6,14 @@ Setup
 Go two deep in interrupts
 
   $ ti o task
-  Start working on task.
+  Start working on \x1b[32mtask\x1b[39m. (esc)
   $ ti i interrupt1
-  Interrupting task with interrupt: interrupt1. You are now 1 deep in interrupts.
+  Interrupting \x1b[31mtask\x1b[39m with \x1b[32minterrupt: interrupt1\x1b[39m. You are now 1 deep in interrupts. (esc)
   $ ti i interrupt2
-  Interrupting interrupt: interrupt1 with interrupt: interrupt2. You are now 2 deep in interrupts.
+  Interrupting \x1b[31minterrupt: interrupt1\x1b[39m with \x1b[32minterrupt: interrupt2\x1b[39m. You are now 2 deep in interrupts. (esc)
   $ ti f
-  interrupt: interrupt2 is done, you're back to working on interrupt: interrupt1.
+  \x1b[31minterrupt: interrupt2\x1b[39m is done, you're back to working on \x1b[32minterrupt: interrupt1\x1b[39m. (esc)
   $ ti f
-  interrupt: interrupt1 is done, you're back to working on task.
+  \x1b[31minterrupt: interrupt1\x1b[39m is done, you're back to working on \x1b[32mtask\x1b[39m. (esc)
   $ ti f
-  So you stopped working on task.
+  So you stopped working on \x1b[31mtask\x1b[39m. (esc)

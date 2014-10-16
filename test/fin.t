@@ -18,24 +18,24 @@ Incorrectly running it (above) shouldn't create any file
 Start a task and then fin
 
   $ ti on testing-my-foot
-  Start working on testing-my-foot.
+  Start working on \x1b[32mtesting-my-foot\x1b[39m. (esc)
   $ ti fin
-  So you stopped working on testing-my-foot.
+  So you stopped working on \x1b[31mtesting-my-foot\x1b[39m. (esc)
   $ test -f $SHEET_FILE
 
 Fin a tagged activity
 
   $ ti on tagged-one
-  Start working on tagged-one.
+  Start working on \x1b[32mtagged-one\x1b[39m. (esc)
   $ ti tag woohoo
   Okay, tagged current work with 1 tags.
   $ ti fin
-  So you stopped working on tagged-one.
+  So you stopped working on \x1b[31mtagged-one\x1b[39m. (esc)
 
 Check the current file existence
 
   $ ti on awesomeness
-  Start working on awesomeness.
+  Start working on \x1b[32mawesomeness\x1b[39m. (esc)
   $ ti fin
-  So you stopped working on awesomeness.
+  So you stopped working on \x1b[31mawesomeness\x1b[39m. (esc)
   $ test -f $SHEET_FILE

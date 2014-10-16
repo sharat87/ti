@@ -37,6 +37,8 @@ import os, subprocess, tempfile
 from os import path
 import sys
 
+from colorama import *
+
 class JsonStore(object):
 
     def __init__(self, filename):
@@ -58,6 +60,20 @@ class JsonStore(object):
             json.dump(data, f, separators=(',', ': '), indent=2)
 
 
+def red(str):
+  return Fore.RED + str + Fore.RESET
+
+def green(str):
+  return Fore.GREEN + str + Fore.RESET
+
+def yellow(str):
+  return Fore.YELLOW + str + Fore.RESET
+
+def blue(str):
+  return Fore.BLUE + str + Fore.RESET
+
+
+
 def get_current(data):
     return (data['interrupt_stack'] or data['work'])[-1]
 
@@ -67,7 +83,7 @@ def action_on(name, time):
     work = data['work']
 
     if work and 'end' not in work[-1]:
-        print('You are already working on ' + work[-1]['name'] +
+        print('You are already working on ' + yellow(work[-1]['name']) +
                 '. Stop it or use a different sheet.', file=sys.stderr)
         raise SystemExit(1)
 
@@ -79,7 +95,7 @@ def action_on(name, time):
     work.append(entry)
     store.dump(data)
 
-    print('Start working on ' + name + '.')
+    print('Start working on ' + green(name) + '.')
 
 
 def action_fin(time):
@@ -99,9 +115,9 @@ def action_fin(time):
     store.dump(data)
 
     if interrupted is not None:
-        print('%s is done, you\'re back to working on %s.' % (current['name'], interrupted['name']))
+        print('%s is done, you\'re back to working on %s.' % (red(current['name']), green(interrupted['name'])))
     else:
-        print('So you stopped working on ' + current['name'] + '.')
+        print('So you stopped working on ' + red(current['name']) + '.')
 
 
 def action_interrupt(name, time):
@@ -124,7 +140,7 @@ def action_interrupt(name, time):
     current = data['work'][-1]
 
     print('Interrupting %s with %s. You are now %d deep in interrupts.' %
-          (interrupted['name'], entry['name'], len(interrupt_stack)))
+          (red(interrupted['name']), green(entry['name']), len(interrupt_stack)))
 
 
 def action_note(content):
@@ -140,7 +156,7 @@ def action_note(content):
 
     store.dump(data)
 
-    print('Yep, noted to `' + current['name'] + '`.')
+    print('Yep, noted to ' + yellow(current['name']) + '.')
 
 
 def action_tag(tags):
@@ -172,9 +188,8 @@ def action_status():
     start_time = parse_isotime(current['start'])
     diff = timegap(start_time, datetime.utcnow())
 
-    print('You have been working on `{0[name]}` for {1}.'
-            .format(current, diff))
-
+    print('You have been working on {0} for {1}.'
+            .format(green(current['name']), diff))
 
 def action_log(period):
     data = store.load()

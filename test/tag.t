@@ -13,6 +13,6 @@ When not working
 Not giving a tag to add
 
   $ ti on something
-  Start working on something.
+  Start working on \x1b[32msomething\x1b[39m. (esc)
   $ ti tag
   Please provide at least one tag to add.
