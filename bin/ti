@@ -14,6 +14,7 @@ Usage:
   ti (l|log) [today]
   ti (e|edit)
   ti (i|interrupt)
+  ti --no-color
   ti -h | --help
 
 Options:
@@ -37,6 +38,8 @@ import os, subprocess, tempfile
 from os import path
 import sys
 
+from colorama import *
+
 class JsonStore(object):
 
     def __init__(self, filename):
@@ -58,12 +61,37 @@ class JsonStore(object):
             json.dump(data, f, separators=(',', ': '), indent=2)
 
 
+def red(str):
+    if use_color:
+        return Fore.RED + str + Fore.RESET
+    else:
+        return str
+
+def green(str):
+    if use_color:
+        return Fore.GREEN + str + Fore.RESET
+    else: 
+        return str
+
+def yellow(str):
+    if use_color: 
+        return Fore.YELLOW + str + Fore.RESET
+    else:
+        return str
+
+def blue(str):
+    if use_color: 
+        return Fore.BLUE + str + Fore.RESET
+    else:
+        return str
+
+
 def action_on(name, time):
     data = store.load()
     work = data['work']
 
     if work and 'end' not in work[-1]:
-        print('You are already working on ' + work[-1]['name'] +
+        print('You are already working on ' + yellow(work[-1]['name']) +
                 '. Stop it or use a different sheet.', file=sys.stderr)
         raise SystemExit(1)
 
@@ -75,7 +103,7 @@ def action_on(name, time):
     work.append(entry)
     store.dump(data)
 
-    print('Start working on ' + name + '.')
+    print('Start working on ' + green(name) + '.')
 
 
 def action_fin(time, back_from_interrupt=True):
@@ -86,7 +114,7 @@ def action_fin(time, back_from_interrupt=True):
     current = data['work'][-1]
     current['end'] = time
     store.dump(data)
-    print('So you stopped working on ' + current['name'] + '.')
+    print('So you stopped working on ' + red(current['name']) + '.')
 
     if back_from_interrupt and len(data['interrupt_stack']) > 0:
         name = data['interrupt_stack'].pop()['name']
@@ -113,7 +141,7 @@ def action_interrupt(name, time):
     interrupt_stack.append(interrupted)
     store.dump(data)
 
-    action_on('interrupt: ' + name, time)
+    action_on('interrupt: ' + green(name), time)
     print('You are now %d deep in interrupts.' % len(interrupt_stack))
 
 
@@ -130,7 +158,7 @@ def action_note(content):
 
     store.dump(data)
 
-    print('Yep, noted to `' + current['name'] + '`.')
+    print('Yep, noted to ' + yellow(current['name']) + '.')
 
 
 def action_tag(tags):
@@ -162,9 +190,8 @@ def action_status():
     start_time = parse_isotime(current['start'])
     diff = timegap(start_time, datetime.utcnow())
 
-    print('You have been working on `{0[name]}` for {1}.'
-            .format(current, diff))
-
+    print('You have been working on {0} for {1}.'
+            .format(green(current['name']), diff))
 
 def action_log(period):
     data = store.load()
@@ -320,7 +347,13 @@ def helpful_exit(msg=__doc__):
 
 
 def parse_args(argv=sys.argv):
+    global use_color
+
     argv = [arg.decode('utf-8') for arg in argv]
+
+    if '--no-color' in argv:
+        use_color = False
+        argv.remove('--no-color')
 
     # prog = argv[0]
     if len(argv) == 1:
@@ -328,7 +361,7 @@ def parse_args(argv=sys.argv):
 
     head = argv[1]
     tail = argv[2:]
-
+      
     if head in ['-h', '--help', 'h', 'help']:
         helpful_exit()
 
@@ -397,4 +430,5 @@ store = JsonStore(os.getenv('SHEET_FILE', None) or
                     os.path.expanduser('~/.ti-sheet'))
 
 if __name__ == '__main__':
+    use_color = True
     main()

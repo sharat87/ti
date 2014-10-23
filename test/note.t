@@ -1,7 +1,7 @@
 Setup
 
   $ export SHEET_FILE=$TMP/sheet
-  $ alias ti="$TESTDIR/../bin/ti"
+  $ alias ti="$TESTDIR/../bin/ti --no-color"
 
 Note when not working
 
