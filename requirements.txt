@@ -2,3 +2,4 @@ cram
 pygreen
 ghp-import
 pyyaml
+colorama

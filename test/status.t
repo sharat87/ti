@@ -1,7 +1,7 @@
 Setup
 
   $ export SHEET_FILE=$TMP/sheet-status
-  $ alias ti="$TESTDIR/../bin/ti"
+  $ alias ti="$TESTDIR/../bin/ti --no-color"
 
 Status when not working
 

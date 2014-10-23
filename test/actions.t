@@ -1,7 +1,7 @@
 Setup
 
   $ export SHEET_FILE=$TMP/sheet-actions
-  $ alias ti="$TESTDIR/../bin/ti"
+  $ alias ti="$TESTDIR/../bin/ti --no-color"
 
 Running an unknown action
 
