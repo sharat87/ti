@@ -141,7 +141,7 @@ def action_interrupt(name, time):
     interrupt_stack.append(interrupted)
     store.dump(data)
 
-    action_on('interrupt: ' + green(name), time)
+    action_on('interrupt: ' + name, time)
     print('You are now %d deep in interrupts.' % len(interrupt_stack))
 
 
