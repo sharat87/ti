@@ -6,8 +6,8 @@ ti is a simple and extensible time tracker for the command line. Visit the
 project page (http://ti.sharats.me) for more details.
 
 Usage:
-  ti (o|on) <name> [<time>...]
-  ti (f|fin) [<time>...]
+  ti (o|on|start) <name> [<time>...]
+  ti (f|fin|stop) [<time>...]
   ti (s|status)
   ti (t|tag) <tag>...
   ti (n|note) <note-text>...
@@ -369,7 +369,7 @@ def parse_args(argv=sys.argv):
         fn = action_edit
         args = {}
 
-    elif head in ['o', 'on']:
+    elif head in ['o', 'on', 'start']:
         if not tail:
             helpful_exit('Need the name of whatever you are working on.')
 
@@ -379,7 +379,7 @@ def parse_args(argv=sys.argv):
             'time': to_datetime(' '.join(tail[1:])),
         }
 
-    elif head in ['f', 'fin']:
+    elif head in ['f', 'fin', 'stop']:
         fn = action_fin
         args = {'time': to_datetime(' '.join(tail))}
 
