@@ -81,10 +81,18 @@ Tag your activities for fun and profit.
 
     $ ti tag imp
 
-Get a log of all activities with the `log` (or `l`) command.
+Get a log of all activities ordered by time spent with the `log` (or `l`) command.
 
     $ ti log
 
+List activities in time order with the `list` command.
+
+    $ ti list
+
+Pass a filter to the `list` command to total up the hours of matching records.
+
+    $ ti list +project-x
+    
 ## Command reference
 
 Run `ti -h` (or `--help` or `help` or just `h`) to get a short command summary
@@ -176,6 +184,13 @@ adds the note `Discuss this with the other team.` to the current activity.
 
 Gives a table like representation of all activities and total time spent on each
 of them.
+
+### list
+- Syntax: `ti (list) [filter-1, filter-n]
+
+Provides a list of all activities in the order they occurred.  Passing one or more 
+filters will only show matching records and calculate a total number of hours
+for the matches.  Works well for a timecard for a project or a time period.
 
 ## Time format
 

@@ -14,6 +14,7 @@ Usage:
   ti (l|log) [today]
   ti (e|edit)
   ti (i|interrupt)
+  ti (list) [<filter-1> <filter-2> ... <filter-n>]
   ti --no-color
   ti -h | --help
 
@@ -39,6 +40,12 @@ from os import path
 import sys
 
 from colorama import *
+import dateutil.parser
+from dateutil import tz
+LOCAL = tz.tzlocal()
+UTC = tz.gettz('UTC')
+
+
 
 class JsonStore(object):
 
@@ -235,6 +242,43 @@ def action_log(period):
                 end=' ← working\n' if current == name else '\n')
 
 
+def action_list(filters):
+    data = store.load()
+    work = data['work']
+    current = None
+
+    n = datetime.utcnow()
+    total_dur = timedelta(0)
+
+    for item in sorted(work, key=(lambda x: x['start'])):
+        start_time = dateutil.parser.parse(item['start']).astimezone(LOCAL)
+        if 'end' in item:
+            end_time = dateutil.parser.parse(item['end']).astimezone(LOCAL)
+        else:
+            end_time = datetime.utcnow().replace(tzinfo=UTC).astimezone(LOCAL) #wow Python.  That's pretty crappy.
+            current = item['name']
+
+        dur = end_time - start_time
+        dur_str = ':'.join(str(dur).split('.')[:1]) #just show hours, minutes, seconds
+
+        line = start_time.strftime('%Y-%m-%d %H:%M')+'->'+end_time.strftime('%H:%M')+' ('+ dur_str +'):  '+ item['name']
+      
+        if (current):
+            line = line + green(' (current)')
+
+        if (filters):
+            #if filters are defined, only print str if line contains all of the filters
+            if all(x in line for x in filters):
+                print(line)
+                total_dur = total_dur + dur
+        else:
+            print(line)
+            total_dur = total_dur + dur
+
+    if (filters):
+        print( '                 Total: ('+':'.join( str(total_dur).split('.')[:1] ) +')' )
+
+
 def action_edit():
     if 'EDITOR' not in os.environ:
         print("Please set the 'EDITOR' environment variable", file=sys.stderr)
@@ -414,6 +458,10 @@ def parse_args(argv=sys.argv):
             'name': tail[0],
             'time': to_datetime(' '.join(tail[1:])),
         }
+
+    elif head in ['list']:
+        fn = action_list
+        args = {'filters': tail[0:] if tail else None}
 
     else:
         helpful_exit("I don't understand '" + head + "'")
