@@ -231,8 +231,8 @@ def action_log(period):
         log[name]['tmsg'] = ', '.join(tmsg)[::-1].replace(',', ' &'[::-1], 1)[::-1]
 
     for name, item in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
-        print(name.ljust(name_col_len), ' ∙∙ ', item['tmsg'],
-                end=' ← working\n' if current == name else '\n')
+        print(name.ljust(name_col_len), ' ∙∙ '.encode('utf-8'), item['tmsg'],
+                end=' ← working\n'.encode('utf-8') if current == name else '\n')
 
 
 def action_edit():
