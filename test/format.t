@@ -23,7 +23,7 @@ Another one, with notes
   $ ti on another-project
   Start working on another-project.
   $ ti note a simple note
-  Yep, noted to `another-project`.
+  Yep, noted to another-project.
 
 End and check
 
