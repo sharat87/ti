@@ -223,6 +223,7 @@ github](https://raw.github.com/sharat87/ti/master/bin/ti)</a>.
 
 - Put it somewhere in your `$PATH` and make sure it has executable permissions.
 - Install pyyaml using the command `pip install --user pyyaml`.
+- Install colorama using the command `pip install --user colorama`.
 
 After that, `ti` should be working fine.
 
