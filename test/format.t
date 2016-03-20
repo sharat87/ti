@@ -1,7 +1,7 @@
 Setup
 
-  $ export SHEET_FILE=$TMP/sheet-format
-  $ alias ti="$TESTDIR/../bin/ti --no-color"
+  $ export SHEET_FILE=$CRAMTMP/sheet-actions
+  $ alias ti="ti --no-color"
 
 Confirm no sheet file
 
@@ -23,7 +23,7 @@ Another one, with notes
   $ ti on another-project
   Start working on another-project.
   $ ti note a simple note
-  Yep, noted to `another-project`.
+  Yep, noted to another-project.
 
 End and check
 

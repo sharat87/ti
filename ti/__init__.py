@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# encoding: utf-8
+# coding: utf-8
 
 """
 ti is a simple and extensible time tracker for the command line. Visit the
@@ -70,17 +69,17 @@ def red(str):
 def green(str):
     if use_color:
         return Fore.GREEN + str + Fore.RESET
-    else: 
+    else:
         return str
 
 def yellow(str):
-    if use_color: 
+    if use_color:
         return Fore.YELLOW + str + Fore.RESET
     else:
         return str
 
 def blue(str):
-    if use_color: 
+    if use_color:
         return Fore.BLUE + str + Fore.RESET
     else:
         return str
@@ -361,7 +360,7 @@ def parse_args(argv=sys.argv):
 
     head = argv[1]
     tail = argv[2:]
-      
+
     if head in ['-h', '--help', 'h', 'help']:
         helpful_exit()
 
@@ -428,7 +427,7 @@ def main():
 
 store = JsonStore(os.getenv('SHEET_FILE', None) or
                     os.path.expanduser('~/.ti-sheet'))
+use_color = True
 
 if __name__ == '__main__':
-    use_color = True
     main()
