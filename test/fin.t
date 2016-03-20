@@ -1,7 +1,7 @@
 Setup
 
-  $ export SHEET_FILE=$TMP/sheet-fin
-  $ alias ti="$TESTDIR/../bin/ti --no-color"
+  $ export SHEET_FILE=$CRAMTMP/sheet-actions
+  $ alias ti="ti --no-color"
 
 Running fin when not working
 
