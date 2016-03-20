@@ -1,7 +1,7 @@
 Setup
 
-  $ export SHEET_FILE=$TMP/sheet-tag
-  $ alias ti="$TESTDIR/../bin/ti --no-color"
+  $ export SHEET_FILE=$CRAMTMP/sheet-actions
+  $ alias ti="ti --no-color"
 
 When not working
 
