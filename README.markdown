@@ -46,6 +46,8 @@ tied up to only work on linux, you might notice the lack of *plugins* in this
 python version. I am not really missing them, so I might not add them. If anyone
 has any interesting use cases for it, I'm willing to consider.
 
+## Installation
+
 ## Usage
 
 Here's the minimal usage style:
@@ -228,6 +230,10 @@ github](https://raw.github.com/sharat87/ti/master/bin/ti)</a>.
 - Install colorama using the command `pip install --user colorama`.
 
 After that, `ti` should be working fine.
+
+Alternatively, if you use [Homebrew](http://brew.sh) or
+[Linuxbrew](https://github.com/Homebrew/linuxbrew) package manager, you can run
+`brew install --HEAD https://github.com/sharat87/ti/ti.rb`
 
 Also, visit the [project page on github](https://github.com/sharat87/ti) for any
 further details.
