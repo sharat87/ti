@@ -244,7 +244,7 @@ def action_edit():
     yml = yaml.safe_dump(data, default_flow_style=False, allow_unicode=True)
 
     cmd = os.getenv('EDITOR')
-    fd, temp_path = tempfile.mkstemp(prefix='ti.')
+    fd, temp_path = tempfile.mkstemp(prefix='ti.', suffix='.yml')
     with open(temp_path, "r+") as f:
         f.write(yml.replace('\n- ', '\n\n- '))
         f.seek(0)
