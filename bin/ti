@@ -193,6 +193,15 @@ def action_status():
     print('You have been working on {0} for {1}.'
             .format(green(current['name']), diff))
 
+def action_list(period):
+    data = store.load()
+    work = data['work'] + data['interrupt_stack']
+    names=[]
+    for item in work:
+        if not item['name'] in names:
+            names+=[item['name']]
+            print(item['name'])
+    
 def action_log(period):
     data = store.load()
     work = data['work'] + data['interrupt_stack']
@@ -389,6 +398,10 @@ def parse_args(argv=sys.argv):
 
     elif head in ['l', 'log']:
         fn = action_log
+        args = {'period': tail[0] if tail else None}
+
+    elif head in ['list']:
+        fn = action_list
         args = {'period': tail[0] if tail else None}
 
     elif head in ['t', 'tag']:
