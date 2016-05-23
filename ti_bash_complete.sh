@@ -1,5 +1,6 @@
 
 ## To use copy this file into /etc/bash_completion.d/
+## and run . /etc/bash_completion.d/ti_bash_complete.sh
 ## or whatever makes sense on your system.
 
 _ti()
