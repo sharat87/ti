@@ -14,8 +14,6 @@ def read(*filenames, **kwargs):
             buf.append(f.read())
     return sep.join(buf)
 
-description = "A silly simple time tracker"
-long_description = read('README.rst')
 testing = bool({'pytest', 'test'}.intersection(sys.argv))
 
 setup(
@@ -27,8 +25,8 @@ setup(
     include_package_data=True,
     scripts=[],
     url="http://ti.sharats.me/",
-    description=description,
-    long_description=long_description,
+    description="A silly simple time tracker",
+    long_description=read('README.rst', 'CHANGES.rst'),
     entry_points={
         'console_scripts': [
             'ti = ti:main',
