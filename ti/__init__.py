@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# encoding: utf-8
+# coding: utf-8
 
 """
 ti is a simple and extensible time tracker for the command line. Visit the
@@ -19,7 +18,7 @@ Usage:
 
 Options:
   -h --help         Show this help.
-  <start-time>...   A time specification (Go to http://ti.sharats.me for more on
+  <start-time>...   A time specification (goto http://ti.sharats.me for more on
                     this).
   <tag>...          Tags can be made of any characters, but its probably a good
                     idea to avoid whitespace.
@@ -30,15 +29,19 @@ Options:
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import json, yaml
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
 from datetime import datetime, timedelta
 from collections import defaultdict
-import re
-import os, subprocess, tempfile
 from os import path
-import sys
 
-from colorama import *
+import yaml
+from colorama import Fore
+
 
 class JsonStore(object):
 
@@ -67,20 +70,23 @@ def red(str):
     else:
         return str
 
+
 def green(str):
     if use_color:
         return Fore.GREEN + str + Fore.RESET
-    else: 
+    else:
         return str
 
+
 def yellow(str):
-    if use_color: 
+    if use_color:
         return Fore.YELLOW + str + Fore.RESET
     else:
         return str
 
+
 def blue(str):
-    if use_color: 
+    if use_color:
         return Fore.BLUE + str + Fore.RESET
     else:
         return str
@@ -92,7 +98,7 @@ def action_on(name, time):
 
     if work and 'end' not in work[-1]:
         print('You are already working on ' + yellow(work[-1]['name']) +
-                '. Stop it or use a different sheet.', file=sys.stderr)
+              '. Stop it or use a different sheet.', file=sys.stderr)
         raise SystemExit(1)
 
     entry = {
@@ -121,7 +127,8 @@ def action_fin(time, back_from_interrupt=True):
         store.dump(data)
         action_on(name, time)
         if len(data['interrupt_stack']) > 0:
-            print('You are now %d deep in interrupts.' % len(data['interrupt_stack']))
+            print('You are now %d deep in interrupts.'
+                  % len(data['interrupt_stack']))
         else:
             print('Congrats, you\'re out of interrupts!')
 
@@ -135,7 +142,6 @@ def action_interrupt(name, time):
     if 'interrupt_stack' not in data:
         data['interrupt_stack'] = []
     interrupt_stack = data['interrupt_stack']
-    work = data['work']
 
     interrupted = data['work'][-1]
     interrupt_stack.append(interrupted)
@@ -175,7 +181,7 @@ def action_tag(tags):
 
     tag_count = str(len(tags))
     print('Okay, tagged current work with ' + tag_count + ' tag' +
-            ('s' if tag_count > 1 else '') + '.')
+          ('s' if tag_count > 1 else '') + '.')
 
 
 def action_status():
@@ -190,8 +196,9 @@ def action_status():
     start_time = parse_isotime(current['start'])
     diff = timegap(start_time, datetime.utcnow())
 
-    print('You have been working on {0} for {1}.'
-            .format(green(current['name']), diff))
+    print('You have been working on {0} for {1}.'.format(
+        green(current['name']), diff))
+
 
 def action_log(period):
     data = store.load()
@@ -202,7 +209,8 @@ def action_log(period):
     for item in work:
         start_time = parse_isotime(item['start'])
         if 'end' in item:
-            log[item['name']]['delta'] += parse_isotime(item['end']) - start_time
+            log[item['name']]['delta'] += (
+                parse_isotime(item['end']) - start_time)
         else:
             log[item['name']]['delta'] += datetime.utcnow() - start_time
             current = item['name']
@@ -228,11 +236,11 @@ def action_log(period):
         if secs:
             tmsg.append(str(secs) + ' second' + ('s' if secs > 1 else ''))
 
-        log[name]['tmsg'] = ', '.join(tmsg)[::-1].replace(',', ' &'[::-1], 1)[::-1]
+        log[name]['tmsg'] = ', '.join(tmsg)[::-1].replace(',', '& ', 1)[::-1]
 
     for name, item in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
         print(name.ljust(name_col_len), ' ∙∙ ', item['tmsg'],
-                end=' ← working\n' if current == name else '\n')
+              end=' ← working\n' if current == name else '\n')
 
 
 def action_edit():
@@ -257,10 +265,10 @@ def action_edit():
     os.remove(temp_path)
 
     try:
-      data = yaml.load(yml)
+        data = yaml.load(yml)
     except:
-      print("Oops, that YAML didn't appear to be valid!", file=sys.stderr)
-      raise SystemExit(1)
+        print("Oops, that YAML didn't appear to be valid!", file=sys.stderr)
+        raise SystemExit(1)
 
     store.dump(data)
 
@@ -271,10 +279,11 @@ def is_working():
 
 
 def ensure_working():
-    if is_working(): return
+    if is_working():
+        return
 
-    print("For all I know, you aren't working on anything."
-            " I don't know what to do.", file=sys.stderr)
+    print("For all I know, you aren't working on anything. "
+          "I don't know what to do.", file=sys.stderr)
     print('See `ti -h` to know how to start working.', file=sys.stderr)
     raise SystemExit(1)
 
@@ -289,7 +298,8 @@ def parse_engtime(timestr):
     if not timestr or timestr.strip() == 'now':
         return now
 
-    match = re.match(r'(\d+|a) \s* (s|secs?|seconds?) \s+ ago $', timestr, re.X)
+    match = re.match(r'(\d+|a) \s* (s|secs?|seconds?) \s+ ago $',
+                     timestr, re.X)
     if match is not None:
         n = match.group(1)
         seconds = 1 if n == 'a' else int(n)
@@ -361,7 +371,7 @@ def parse_args(argv=sys.argv):
 
     head = argv[1]
     tail = argv[2:]
-      
+
     if head in ['-h', '--help', 'h', 'help']:
         helpful_exit()
 
@@ -427,8 +437,8 @@ def main():
 
 
 store = JsonStore(os.getenv('SHEET_FILE', None) or
-                    os.path.expanduser('~/.ti-sheet'))
+                  os.path.expanduser('~/.ti-sheet'))
+use_color = True
 
 if __name__ == '__main__':
-    use_color = True
     main()

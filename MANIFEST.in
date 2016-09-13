@@ -1,0 +1,6 @@
+include *.rst
+recursive-include site *.css
+recursive-include site *.html
+recursive-include site *.ico
+recursive-include test *.t
+include site/CNAME
