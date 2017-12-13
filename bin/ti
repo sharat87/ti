@@ -349,7 +349,10 @@ def helpful_exit(msg=__doc__):
 def parse_args(argv=sys.argv):
     global use_color
 
-    argv = [arg.decode('utf-8') for arg in argv]
+    try: 
+      argv = [arg.decode('utf-8') for arg in argv]
+    except AttributeError:
+      pass
 
     if '--no-color' in argv:
         use_color = False
