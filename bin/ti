@@ -230,7 +230,7 @@ def action_log(period):
 
         log[name]['tmsg'] = ', '.join(tmsg)[::-1].replace(',', ' &'[::-1], 1)[::-1]
 
-    for name, item in sorted(log.items(), key=(lambda x: x[1]), reverse=True):
+    for name, item in log.items():
         print(name.ljust(name_col_len), ' ∙∙ ', item['tmsg'],
                 end=' ← working\n' if current == name else '\n')
 
@@ -432,3 +432,4 @@ store = JsonStore(os.getenv('SHEET_FILE', None) or
 if __name__ == '__main__':
     use_color = True
     main()
+
