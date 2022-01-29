@@ -195,7 +195,14 @@ def action_status():
 
 def action_log(period):
     data = store.load()
-    work = data['work'] + data['interrupt_stack']
+    work_ = data['work'] + data['interrupt_stack']
+
+    if period == 'today':
+        today = datetime.now().strftime("%Y-%m-%d")
+        work = filter(lambda x: x['end'].split('T')[0] == today, work_)
+    else:
+        work = work_
+
     log = defaultdict(lambda: {'delta': timedelta()})
     current = None
 
