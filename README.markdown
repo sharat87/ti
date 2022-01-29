@@ -1,5 +1,9 @@
 # Development moved to https://github.com/tbekolay/ti
 
+This version:
+
+fixed issues #32 and #34 and added `ti log today`.
+
 # ti &mdash; A silly simple time tracker
 
 `ti` is a small command line time tracking application. Simple basic usage
