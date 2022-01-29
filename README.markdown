@@ -1,6 +1,4 @@
-# Development moved to https://github.com/tbekolay/ti
-
-This version:
+This fork includes:
 
 fixed issues #32 and #34 and added `ti log today`.
 
