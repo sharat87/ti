@@ -1,6 +1,6 @@
 This fork includes:
 
-fixed issues #32 and #34 and added `ti log today`.
+fix issues #32 and #34 and add `ti log today`.
 
 # ti &mdash; A silly simple time tracker
 
