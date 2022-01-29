@@ -175,7 +175,7 @@ def action_tag(tags):
 
     tag_count = str(len(tags))
     print('Okay, tagged current work with ' + tag_count + ' tag' +
-            ('s' if tag_count > 1 else '') + '.')
+            ('s' if tag_count > '1' else '') + '.')
 
 
 def action_status():
